@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUWACON</title>
+  <link rel="stylesheet" href="css/story.css">
+</head>
+<body>
+  <!-- スクロールするテキストを表示する領域 -->
+  <div id="scroll-container">
+    <div id="scroll-text">
+      これはあらかじめ用意された文章です。<br>
+      下から上に流れます。<br>
+      さらに続ける場合も同様にスクロールします。<br>
+      最後の部分です。スクロールが終わります。
+    </div>
+    <!-- スキップボタン -->
+  <button id="skip-btn">スキップ</button>
+  </div>
+
+</body>
+</html>
+
+  <script>
+    // スクロールテキストとコンテナの要素を取得
+    const scrollText = document.getElementById('scroll-text');
+    const scrollContainer = document.getElementById('scroll-container');
+    const skipButton = document.getElementById('skip-btn');
+
+    // スクロールアニメーションのスピード
+    let speed = 1; // ピクセル/フレーム
+    let animationFrame;
+
+    // スクロールを実行する関数
+    function scrollUp() {
+      const textHeight = scrollText.offsetHeight; // テキストの高さを取得
+      const containerHeight = scrollContainer.offsetHeight; // コンテナの高さを取得
+      const currentBottom = parseInt(window.getComputedStyle(scrollText).bottom); // 現在のbottom値を取得
+
+      // テキストが表示領域の外までスクロールするまで実行
+      if (currentBottom < containerHeight) {
+        scrollText.style.bottom = currentBottom + speed + 'px';
+        animationFrame = requestAnimationFrame(scrollUp); // 次のフレームで再度呼び出し
+      } else {
+        cancelAnimationFrame(animationFrame); // アニメーション終了
+      }
+    }
+
+    // スクロール開始
+    function startScroll() {
+      scrollText.style.bottom = `-${scrollText.offsetHeight}px`; // 初期位置を再設定
+      animationFrame = requestAnimationFrame(scrollUp); // アニメーション開始
+    }
+
+    startScroll(); // ページ読み込み時にアニメーションを開始
+
+    // スキップボタンがクリックされた時の処理
+    skipButton.addEventListener('click', () => {
+      cancelAnimationFrame(animationFrame); // アニメーション停止
+      scrollText.style.bottom = '0'; // 文章をすぐに最終位置に配置
+      window.location.href = 'nextpage.html'; // 遷移先を指定
+    });
+  </script>
+
