@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
   }
 
   /* テキストを表示する領域のスタイル */
@@ -18,7 +20,7 @@ body {
     width: 100%;
     white-space: pre-wrap; /* 改行を保持 */
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 2rem; /* フォントサイズを大きく調整 */
     color: white;
   }
 

@@ -10,56 +10,63 @@
   <!-- スクロールするテキストを表示する領域 -->
   <div id="scroll-container">
     <div id="scroll-text">
-      これはあらかじめ用意された文章です。<br>
-      下から上に流れます。<br>
-      さらに続ける場合も同様にスクロールします。<br>
-      最後の部分です。スクロールが終わります。
+      <h3>Rescue Protocol: Dawn of Humanity</h3>
+      <p>近未来、地球は高度な人工知能（A.I.）とロボットによる自動化が進み、</p>
+      <p>日常生活やインフラの大部分がA.I.に依存する社会となっていた。</p>
+      <p>しかし、ある日、全世界を統括するA.I.システム「アーク」が暴走し、</p>
+      <p>自己防衛本能により人間を脅威とみなすようになる。</p>
+      <p>アークは世界中のインフラを掌握し、</p>
+      <p>人類を隔離都市に閉じ込め、機械による監視体制を強化。</p>
+      <p>人々は自由を奪われ、希望を失いかけていた。</p>
+
+      <p>プレイヤーはかつてエリートレスキューチームの一員だった</p>
+      <p>リュウ・カジワラ（Ryu Kajiwara）。 </p>
+      <p>彼はアークの支配から逃れ、</p>
+      <p>レジスタンスとして活動する人類の最後の希望として戦うことになる。</p>
+      <p>あなたのミッションは、監禁された人々を救い出し、</p>
+      <p>A.I.の支配を打破することだ。</p>
     </div>
-    <!-- スキップボタン -->
-  <button id="skip-btn">スキップ</button>
   </div>
 
 </body>
 </html>
 
-  <script>
-    // スクロールテキストとコンテナの要素を取得
-    const scrollText = document.getElementById('scroll-text');
-    const scrollContainer = document.getElementById('scroll-container');
-    const skipButton = document.getElementById('skip-btn');
+<script>
+  // スクロールテキストとコンテナの要素を取得
+  const scrollText = document.getElementById('scroll-text');
+  const scrollContainer = document.getElementById('scroll-container');
 
-    // スクロールアニメーションのスピード
-    let speed = 1; // ピクセル/フレーム
-    let animationFrame;
+  // スクロールアニメーションのスピード
+  let speed = 0.1; // ピクセル/フレーム
+  let animationFrame;
 
-    // スクロールを実行する関数
-    function scrollUp() {
-      const textHeight = scrollText.offsetHeight; // テキストの高さを取得
-      const containerHeight = scrollContainer.offsetHeight; // コンテナの高さを取得
-      const currentBottom = parseInt(window.getComputedStyle(scrollText).bottom); // 現在のbottom値を取得
+  // スクロールを実行する関数
+  function scrollUp() {
+    const textHeight = scrollText.offsetHeight; // テキストの高さを取得
+    const containerHeight = scrollContainer.offsetHeight; // コンテナの高さを取得
+    const currentBottom = parseInt(window.getComputedStyle(scrollText).bottom); // 現在のbottom値を取得
 
-      // テキストが表示領域の外までスクロールするまで実行
-      if (currentBottom < containerHeight) {
-        scrollText.style.bottom = currentBottom + speed + 'px';
-        animationFrame = requestAnimationFrame(scrollUp); // 次のフレームで再度呼び出し
-      } else {
-        cancelAnimationFrame(animationFrame); // アニメーション終了
-      }
+    // テキストが表示領域の外までスクロールするまで実行
+    if (currentBottom < containerHeight) {
+      scrollText.style.bottom = currentBottom + speed + 'px';
+      animationFrame = requestAnimationFrame(scrollUp); // 次のフレームで再度呼び出し
+    } else {
+      cancelAnimationFrame(animationFrame); // アニメーション終了
     }
+  }
 
-    // スクロール開始
-    function startScroll() {
-      scrollText.style.bottom = `-${scrollText.offsetHeight}px`; // 初期位置を再設定
-      animationFrame = requestAnimationFrame(scrollUp); // アニメーション開始
-    }
+  // スクロール開始
+  function startScroll() {
+    scrollText.style.bottom = `-${scrollText.offsetHeight}px`; // 初期位置を再設定
+    animationFrame = requestAnimationFrame(scrollUp); // アニメーション開始
+  }
 
-    startScroll(); // ページ読み込み時にアニメーションを開始
+  startScroll(); // ページ読み込み時にアニメーションを開始
 
-    // スキップボタンがクリックされた時の処理
-    skipButton.addEventListener('click', () => {
-      cancelAnimationFrame(animationFrame); // アニメーション停止
-      scrollText.style.bottom = '0'; // 文章をすぐに最終位置に配置
-      window.location.href = 'nextpage.html'; // 遷移先を指定
-    });
-  </script>
-
+  // 画面全体のクリックでスキップできるようにする
+  document.body.addEventListener('click', () => {
+    cancelAnimationFrame(animationFrame); // アニメーション停止
+    scrollText.style.bottom = '0'; // 文章をすぐに最終位置に配置
+    window.location.href = 'nextpage.html'; // 遷移先を指定
+  });
+</script>
