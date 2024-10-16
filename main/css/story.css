@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
     font-family: 'M PLUS Rounded 1c', sans-serif;
   }
@@ -10,31 +16,16 @@ body {
     height: 100vh;/* 表示する高さ */
     overflow: hidden; /* 余分な部分は隠す */
     position: relative;
-    background-color: #000000;
+    background-color: #30264A;
   }
 
   /* テキストのスタイル */
   #scroll-text {
     position: absolute;
-    bottom: -100%; /* 初期位置：下の外側に配置 */
+    bottom: -10%; /* 初期位置：下の外側に配置 */
     width: 100%;
     white-space: pre-wrap; /* 改行を保持 */
     text-align: center;
     font-size: 2rem; /* フォントサイズを大きく調整 */
     color: white;
-  }
-
-  /* スキップボタンのスタイル */
-  #skip-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
-  #skip-btn:hover {
-    background-color: #0056b3;
   }
