@@ -45,7 +45,6 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
                 ':cookie_id' => $cookie_id,
                 ':stage_id' => $stage_id,
             ]);
-            echo "クリアタイムが更新されました！";
         } else {
             // cookie_idが存在しない場合、INSERTで新規登録
             $stmt = $pdo->prepare("INSERT INTO rankings (stage_id, user_name, clear_time, cookie_id) VALUES (:stage_id, :user_name, :clear_time, :cookie_id)");
@@ -55,13 +54,17 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
                 ':clear_time' => $clear_time,
                 ':cookie_id' => $cookie_id,
             ]);
-            echo "新しい記録が登録されました！";
         }
+
+        // DB登録後にrankingView.phpにリダイレクト
+        header("Location: nextpage.html");
+        exit();  // リダイレクト後のコード実行を停止
     } catch (PDOException $e) {
         echo "エラー: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -76,7 +79,7 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
   <form id="nextPageForm" action="ranking.php" method="POST">
       <input type="text" name="name" placeholder="登録する場合は名前を入力してください" id="name" required>
       <input type="hidden" name="stage_id" value="<?php echo $stage['stage_id']; ?>"> <!-- ステージIDを送信 -->
-      <div>
+      <div id="push">
           <button type="submit">登録</button>
           <button type="button" onclick="location.href='next.php'">ステージ選択</button> <!-- ステージ選択はリンクにする -->
       </div>
