@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;          /* 画面全体に対応 */
+    overflow: hidden;       /* スクロールを無効化 */
+}
+
+body {
+    background-color: #30264A;
+    background-size: cover; /* 画面全体にカバー */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#clear_time{
+    color: white;
+    font-weight: bold;
+    font-size: 100px;
+    font-family: 'DotGothic16', sans-serif;
+    text-align: center;
+    padding: 15px 0;
+    text-shadow:2px 2px 0 #ffe281, -2px -2px 0 #ffe281,
+    -2px 2px 0 #ffe281, 2px -2px 0 #ffe281,
+    0px 2px 0 #ffe281,  0-2px 0 #ffe281,
+    -2px 0 0 #ffe281, 2px 0 0 #ffe281;
+}
+
+#name {
+    width: 50%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 25px;
+    background: #f7f7f7;
+    color: #333;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+#name::placeholder {
+    color: #999;
+}
