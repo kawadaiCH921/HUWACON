@@ -43,9 +43,9 @@
 
   "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
   "ground": [
-    { "x": 0, "y": 950, "width": 300, "height": 150, "image": "ground" },
-    { "x": 400, "y": 950, "width": 800, "height": 150, "image": "ground" },
-    { "x": 1300, "y": 950, "width": 900, "height": 150, "image": "ground" }
+    { "x": 0, "y": 950, "width": 300, "height": 150, "image": "groundLeft" },
+    { "x": 400, "y": 950, "width": 800, "height": 150, "image": "groundMid" },
+    { "x": 1300, "y": 950, "width": 900, "height": 150, "image": "groundRight" }
   ],
 
   "_comment": "穴情報「X・Y(横・縦)、判定の幅(横)」",
