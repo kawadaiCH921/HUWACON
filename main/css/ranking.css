@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;          /* 画面全体に対応 */
+    overflow: hidden;       /* スクロールを無効化 */
+}
+
+body {
+    background-color: #30264A;
+    background-size: cover; /* 画面全体にカバー */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#clear_time {
+    color: white;
+    font-weight: 1000;
+    font-size: 100px;
+    font-family: 'DotGothic16', sans-serif;
+    text-align: center;
+    padding: 15px 0;
+    margin: 30px 10px 10px 10px;
+    text-shadow: 2px 2px 0 #ffe281, -2px -2px 0 #ffe281, -2px 2px 0 #ffe281, 2px -2px 0 #ffe281, 0px 2px 0 #ffe281, 0 -2px 0 #ffe281, -2px 0 0 #ffe281, 2px 0 0 #ffe281;
+}
+
+#nextPageForm {
+    display: flex;
+    flex-direction: column;      /* 縦並びにする */
+    align-items: center;         /* 横方向の中央揃え */
+    margin: 0;                   /* フォーム全体の余白をゼロに */
+    padding: 0;
+    text-align: center;
+}
+
+#name {
+    width: 70vw;
+    height: 10vh;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #D9D9D9;
+    color: #000000;
+    font-size: 30px;
+    line-height: 1.5;
+    margin-top: 0;               /* テキスト入力欄の上部余白をゼロに */
+}
+
+#name::placeholder {
+    color: #999;
+}
+
+#push button {
+    padding: 10px 20px;
+    margin: 150px 20px 0px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    height: 80px;
+    width: 200px;
+    border-radius: 100px;
+}
