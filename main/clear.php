@@ -37,7 +37,7 @@ try {
   <title>HUWACON</title>
   <link rel="stylesheet" href="css/clear.css">
 </head>
-<body style="background-image:url('img/<?php echo htmlspecialchars($stage['stage_img']) ?>')">
+<body style="background-image:url('img/background/<?php echo htmlspecialchars($stage['stage_img']) ?>')">
   <div id="container">
       <h2>MISSION</h2>
       <h2>COMPLETE</h2>
