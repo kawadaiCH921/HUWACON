@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$success = false;  // 登録が成功したかを示すフラグ
+
 // clear.phpから送られたクリアタイムを取得
 $clear_time = $_POST['clear_time'] ?? $_COOKIE['clear_time'] ?? '';
 
@@ -26,7 +28,7 @@ $stage = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信された場合に処理を開始
     try {
-        $stage_id = 1; // ステージIDを設定
+        $stage_id = 1; // ステージIDを設定 編集予定
         $user_name = $_POST['name'];
         
         // cookie_idが存在するか確認
@@ -47,7 +49,7 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
             ]);
         } else {
             // cookie_idが存在しない場合、INSERTで新規登録
-            $stmt = $pdo->prepare("INSERT INTO rankings (stage_id, user_name, clear_time, cookie_id) VALUES (:stage_id, :user_name, :clear_time, :cookie_id)");
+            $stmt = $pdo->prepare("INSERT INTO ranking (stage_id, user_name, clear_time, cookie_id) VALUES (:stage_id, :user_name, :clear_time, :cookie_id)");
             $stmt->execute([
                 ':stage_id' => $stage_id,
                 ':user_name' => $user_name,
@@ -55,16 +57,13 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
                 ':cookie_id' => $cookie_id,
             ]);
         }
-
-        // DB登録後にrankingView.phpにリダイレクト
-        header("Location: nextpage.html");
-        exit();  // リダイレクト後のコード実行を停止
+        
+        $success = true;  // 登録成功フラグを立てる
     } catch (PDOException $e) {
         echo "エラー: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -76,13 +75,26 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
 </head>
 <body>
   <p id="clear_time"><?php echo htmlspecialchars($formatted_time); ?></p>
-  <form id="nextPageForm" action="ranking.php" method="POST">
+  <form id="nextPageForm" action="ranking-input.php" method="POST">
       <input type="text" name="name" placeholder="登録する場合は名前を入力してください" id="name" required>
       <input type="hidden" name="stage_id" value="<?php echo $stage['stage_id']; ?>"> <!-- ステージIDを送信 -->
-      <div id="push">
-          <button type="submit">登録</button>
-          <button type="button" onclick="location.href='next.php'">ステージ選択</button> <!-- ステージ選択はリンクにする -->
-      </div>
+    <div id="push">
+        <button type="submit">登録</button>
+        <button type="button" onclick="location.href='nextpage.html'">ランキング</button>
+        <button type="button" onclick="location.href='nextpage.html'">ステージ選択</button> <!-- ステージ選択はリンクにする -->
+    </div>
   </form>
+  
+  <!-- PHPのフラグをJavaScriptに渡す -->
+  <script>
+      const registrationSuccess = <?php echo json_encode($success); ?>;
+      if (registrationSuccess) {
+          touroku();
+      }
+      
+      function touroku() {
+          alert("登録完了しました。");
+      }
+  </script>
 </body>
 </html>

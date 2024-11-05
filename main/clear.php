@@ -43,7 +43,7 @@ try {
       <h2>COMPLETE</h2>
   </div>
   <!-- 次のページへ送信するためのフォーム -->
-  <form id="nextPageForm" action="ranking.php" method="POST" style="display: none;">
+  <form id="nextPageForm" action="ranking-input.php" method="POST" style="display: none;">
       <input type="hidden" name="stage" value="<?php echo htmlspecialchars($stage_id); ?>">
       <input type="hidden" name="clear_time" value="<?php echo htmlspecialchars($clear_time); ?>">
   </form>
