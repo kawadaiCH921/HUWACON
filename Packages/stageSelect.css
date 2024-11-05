@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+body {
+    font-family: 'DotGothic16', sans-serif;
+    background-color: #2d2a4a;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.back-button {
+    background-color: #444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.stage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stage-button {
+    background: #1a1a2e;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.stage-button img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.stage-button p {
+    font-size: 22px;
+    margin: 0;
+    padding: 10px;
+    background: #2d2a4a;
+    color: #ffffff;
+}
+
+.stage-button:hover {
+    transform: scale(1.05);
+    background: #3a3a5e;
+}
+
+.final-stage {
+    font-size: 20px;
+    color: #ff0000;
+}
