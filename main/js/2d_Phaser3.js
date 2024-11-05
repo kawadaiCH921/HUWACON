@@ -1,3 +1,5 @@
+//変更禁止！！！！！
+
 class MainScene extends Phaser.Scene {
   constructor() {
     super('MainScene');
