@@ -14,7 +14,7 @@ if (isset($_POST['clear_time'])) {
 }
 
 
-require 'DB-connect.php';
+require 'db-connect.php';
 try {
     $pdo = new PDO($connect, USER, PASS);
 
