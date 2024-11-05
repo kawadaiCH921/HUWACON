@@ -19,7 +19,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="2d_Phaser3.css">
+  <!-- <link rel="stylesheet" href="./css/2d_Phaser3.css"> -->
   <title>Phaser 3 スクロールアクション</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
   <script src="js/<?php echo htmlspecialchars($stage['stage_id']) ?>.js" defer></script>
