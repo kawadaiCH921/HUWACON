@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+body{
+    background-color: #30264A;
+color: white;
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+font-family: 'DotGothic16', sans-serif;
+}
+
+.instructions {
+text-align: center;
+}
+
+h1 {
+font-size: 3em;
+margin-bottom: 30px;
+}
+
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+li {
+font-size: 2em;
+margin-bottom: 20px;
+}
