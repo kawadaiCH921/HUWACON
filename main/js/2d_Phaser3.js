@@ -11,7 +11,7 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     // JSONファイルの読み込み
-    this.load.json('stageData', 'js/teststage.json');
+    this.load.json('stageData', 'json/teststage.json');
 
     // JSONデータを取得し、アセットを自動的にロード
     this.load.on('filecomplete-json-stageData', () => {
