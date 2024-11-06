@@ -72,7 +72,7 @@ class MainScene extends Phaser.Scene {
     // === 背景のタイルスプライト生成 ===
     this.bg = this.add.tileSprite(
       -40, 0,                      // 座標 (左上)
-      stage.width, stage.height,  // ステージ全体のサイズ
+      stage.width + 40, stage.height,  // ステージ全体のサイズ
       stage.background.image      // 使用する背景画像のキー
     ).setOrigin(0, 0); // 原点を左上に設定
 
