@@ -35,23 +35,23 @@ class MainScene extends Phaser.Scene {
     const assetList = new Set();
 
     // 背景、プレイヤー、敵、ブロック、ゴールの画像を収集
-    assetList.add({ key: stageData.stage.background.image, path: `img/backgrounds/${stageData.stage.background.image}.jpg` });
-    assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` });
+    assetList.add({ key: stageData.stage.background.image, path: `img/1-1/${stageData.stage.background.image}.jpg` }); //背景
+    assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` }); // プレイヤー　変更しない
 
     stageData.blocks.forEach(block => {
-      assetList.add({ key: block.image, path: `img/grounds/${block.image}.png` });
+      assetList.add({ key: block.image, path: `img/1-1/${block.image}.png` }); // ブロック
     });
 
     stageData.enemies.forEach(enemy => {
-      assetList.add({ key: enemy.image, path: `img/enemies/${enemy.image}.png` });
+      assetList.add({ key: enemy.image, path: `img/1-1/${enemy.image}.png` }); //　敵
     });
 
     stageData.ground.forEach(ground => {
-      assetList.add({ key: ground.image, path: `img/grounds/${ground.image}.png` });
+      assetList.add({ key: ground.image, path: `img/1-1/${ground.image}.png` }); // 地面
     });
 
-    assetList.add({ key: stageData.goal.pole.image, path: `img/goals/${stageData.goal.pole.image}.png` });
-    assetList.add({ key: stageData.goal.flag.image, path: `img/goals/${stageData.goal.flag.image}.png` });
+    assetList.add({ key: stageData.goal.pole.image, path: `img/goals/${stageData.goal.pole.image}.png` }); // ゴール　変更しない
+    assetList.add({ key: stageData.goal.flag.image, path: `img/goals/${stageData.goal.flag.image}.png` }); // ゴール　変更しない
 
     return Array.from(assetList);
   }
