@@ -1,23 +1,9 @@
 <?php
-const SERVER = 'mysql311.phy.lolipop.lan';
-const DBNAME = 'LAA1517481-huwacon';
-const USER = 'LAA1517481';
-const PASS = 'huwacon0921';
-
-$connect = 'mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8';
-
-try {
-    // 変数名を定数名に修正
-    $pdo = new PDO($connect, USER, PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo 'データベース接続失敗: ' . $e->getMessage();
-    exit();
-}
-
-// ステージデータを取得
-$query = $pdo->query('SELECT * FROM stages');
-$stages = $query->fetchAll(PDO::FETCH_ASSOC);
+// セッションを開始
+session_start();
+require 'db-connect.php';  // データベース接続設定 
+// ユーザー名をセッションから取得（存在しない場合はゲストとする）
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'ゲスト';
 ?>
 
 <?php
@@ -35,23 +21,40 @@ echo '<div class="container">';
 echo '<button class="back-button">&larr;</button>';
 echo '<h1>STAGE SELECT</h1>';
 echo '<div class="stage-grid">';
+?>
+<?php
 
-// PHPでループ処理をしてステージのボタンを生成
-foreach ($stages as $stage) {
-    echo '<div class="stage-button" onclick="goToStage(' . $stage['stage_id'] . ')">';
-    echo '<img src="' . htmlspecialchars($stage['stage_img']) . '" alt="Stage ' . $stage['stage_id'] . '">';
-    echo '<p>' . htmlspecialchars($stage['stage_name']) . '</p>';
-    echo '</div>';
-}
+try {
+    $pdo = new PDO($connect, user, pass);
+    
+    // ステージ情報をデータベースから取得
+    $stmt = $pdo->prepare('SELECT * FROM stage ORDER BY stage_id ASC');                 
+    $stmt->execute();                 
 
+    // ステージ情報を表示
+    foreach ($stmt as $row) {
+        echo '<form method="POST" action="2d_Phaser3.php" class="stage-form">';
+        echo '<input type="hidden" name="stage_id" value="' . htmlspecialchars($row['stage_id']) . '">';
+        echo '<div class="stage-button" onclick="this.closest(\'form\').submit();">';
+        // ステージ画像がある場合は表示
+        if (!empty($row['stage_img'])) {
+            echo '<img src="img/' . htmlspecialchars($row['stage_img']) . '" alt="Stage ' . $row['stage_id'] . '">';
+        }
+        echo '<p>' . htmlspecialchars($row['stage_name']) . '</p>';
+        echo '</div>';
+        echo '</form>';
+    }
+} catch (PDOException $e) {
+    echo 'データベースエラー: ' . htmlspecialchars($e->getMessage());
+    exit();
+}             
+?>
+<?php
 echo '</div>';
 echo '</div>';
 
-// JavaScript部分もPHP内に書き込む
+// バックボタンのJavaScriptのみ残す
 echo '<script>';
-echo 'function goToStage(stageNumber) {';
-echo '    window.location.href = "stage.php?stage=" + stageNumber;';
-echo '}';
 echo 'document.querySelector(".back-button").addEventListener("click", function() {';
 echo '    window.history.back();';
 echo '});';
