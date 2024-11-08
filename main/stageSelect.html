@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ステージ選択</title>
+    <link rel="stylesheet" href="./css/stageSelect.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-button">&larr;</button>
+        <h1>STAGE SELECT</h1>
+        <div class="stage-grid">
+            <div class="stage-button" onclick="goToStage(1)">
+                <img src="./css/art1_489.png" alt="Stage 1">
+                <p>STAGE 1</p>
+            </div>
+            <div class="stage-button" onclick="goToStage(2)">
+                <img src="./css/art1_489.png" alt="Stage 2">
+                <p>STAGE 2</p>
+            </div>
+            <div class="stage-button" onclick="goToStage(3)">
+                <img src="./css/art1_489.png" alt="Stage 3">
+                <p>STAGE 3</p>
+            </div>
+            <div class="stage-button" onclick="goToStage(4)">
+                <img src="./css/art1_489.png" alt="Stage 4">
+                <p>STAGE 4</p>
+            </div>
+            <div class="stage-button" onclick="goToStage(5)">
+                <img src="./css/art1_489.png" alt="Stage 5">
+                <p>STAGE 5</p>
+            </div>
+            <div class="stage-button" onclick="goToStage(6)">
+                <img src="./css/art1_489.png" alt="Stage 6">
+                <p>STAGE 6</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToStage(stageNumber) {
+            alert(`ステージ ${stageNumber} に移動します`);
+            // 実際のステージへの遷移をここに記述してください。例: window.location.href = `stage${stageNumber}.html`;
+        }
+
+        document.querySelector('.back-button').addEventListener('click', () => {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

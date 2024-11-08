@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+  }
+
+  /* テキストを表示する領域のスタイル */
+  #scroll-container {
+    width: 100%;
+    height: 100vh;/* 表示する高さ */
+    overflow: hidden; /* 余分な部分は隠す */
+    position: relative;
+    background-color: #30264A;
+  }
+
+  /* テキストのスタイル */
+  #scroll-text {
+    position: absolute;
+    bottom: -10%; /* 初期位置：下の外側に配置 */
+    width: 100%;
+    white-space: pre-wrap; /* 改行を保持 */
+    text-align: center;
+    font-size: 2rem; /* フォントサイズを大きく調整 */
+    color: white;
+  }
