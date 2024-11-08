@@ -1,4 +1,5 @@
-//変更禁止！！！！！
+// このファイルは変更禁止！！！！！
+// コピーして作ったファイルで変更してください！
 
 class MainScene extends Phaser.Scene {
   constructor() {
@@ -37,19 +38,19 @@ class MainScene extends Phaser.Scene {
     const assetList = new Set();
 
     // 背景、プレイヤー、敵、ブロック、ゴールの画像を収集
-    assetList.add({ key: stageData.stage.background.image, path: `img/backgrounds/${stageData.stage.background.image}.jpg` });
-    assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` });
+    assetList.add({ key: stageData.stage.background.image, path: `img//${stageData.stage.background.image}.jpg` }); // 変更要
+    assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` }); 
 
     stageData.blocks.forEach(block => {
-      assetList.add({ key: block.image, path: `img/grounds/${block.image}.png` });
+      assetList.add({ key: block.image, path: `img//${block.image}.png` }); // 変更要
     });
 
     stageData.enemies.forEach(enemy => {
-      assetList.add({ key: enemy.image, path: `img/enemies/${enemy.image}.png` });
+      assetList.add({ key: enemy.image, path: `img//${enemy.image}.png` }); // 変更要
     });
 
     stageData.ground.forEach(ground => {
-      assetList.add({ key: ground.image, path: `img/grounds/${ground.image}.png` });
+      assetList.add({ key: ground.image, path: `img//${ground.image}.png` }); // 変更要
     });
 
     assetList.add({ key: stageData.goal.pole.image, path: `img/goals/${stageData.goal.pole.image}.png` });
@@ -71,7 +72,7 @@ class MainScene extends Phaser.Scene {
     // === 背景のタイルスプライト生成 ===
     this.bg = this.add.tileSprite(
       -40, 0,                      // 座標 (左上)
-      stage.width, stage.height,  // ステージ全体のサイズ
+      stage.width + 40, stage.height,  // ステージ全体のサイズ
       stage.background.image      // 使用する背景画像のキー
     ).setOrigin(0, 0); // 原点を左上に設定
 
