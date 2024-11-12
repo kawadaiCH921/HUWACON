@@ -43,31 +43,19 @@
 
   "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
   "ground": [
-    { "x": 0, "y": 950, "width": 100, "height": 150, "image": "ground_left" },
-    { "x": 100, "y": 950, "width": 100, "height": 150, "image": "ground_center" },
-    { "x": 200, "y": 950, "width": 100, "height": 150, "image": "ground_center" },
-    { "x": 300, "y": 950, "width": 100, "height": 150, "image": "ground_right" },
-
-    { "x": 500, "y": 950, "width": 100, "height": 150, "image": "ground_left" },
-    { "x": 600, "y": 950, "width": 100, "height": 150, "image": "ground_center" },
-    { "x": 700, "y": 950, "width": 100, "height": 150, "image": "ground_center" },
-    { "x": 800, "y": 950, "width": 100, "height": 150, "image": "ground_right" }
+    { "x": 0, "y": 950, "width": 300, "height": 150, "image": "ground" },
+    { "x": 400, "y": 950, "width": 800, "height": 150, "image": "ground" },
+    { "x": 1300, "y": 950, "width": 900, "height": 150, "image": "ground" }
   ],
 
-  "_comment": "死亡判定情報「X・Y(横・縦)、判定の幅(横,縦)」",
+  "_comment": "穴情報「X・Y(横・縦)、判定の幅(横)」",
   "holes": [
-    { "x": 1000, "y": 1000, "width": 2000, "height": 50 },
-    { "x": 300, "y": 860, "width": 30, "height": 30}
+    { "x": 1000, "y": 1000, "width": 2000 }
   ],
 
   "_comment": "ゴール情報「X・Y(横・縦)、サイズ(横・縦)、ゴール画像」",
   "goal": {
     "pole": { "x": 1900, "y": 813, "width": 42, "height": 150, "image": "pole" },
     "flag": { "x": 1900, "y": 713, "width": 42, "height": 48, "image": "flag" }
-  },
-
-  "_comment": "オブジェクト情報「X・Y(横・縦)、画像サイズ(横・縦)、画像」",
-  "decorations": [
-    { "x": 300, "y": 858, "width": 35, "height": 35, "image": "kanban" }
-  ]
+  }
 }
