@@ -293,8 +293,8 @@ class ClearScene extends Phaser.Scene {
     { fontSize: '48px', fill: '#fff' }
   ).setOrigin(0.5); // 中央に配置;
 
-    // クリックまたはスペースキーで再スタート
-    this.input.once('pointerdown', () => {
+  // クリックまたはスペースキーで再スタート
+  this.input.once('pointerdown', () => {
       this.scene.start('MainScene');
     });
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
