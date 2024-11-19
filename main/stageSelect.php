@@ -50,7 +50,7 @@ echo '</div>';
 // JavaScript部分もPHP内に書き込む
 echo '<script>';
 echo 'function goToStage(stageNumber) {';
-echo '    window.location.href = "stage.php?stage=" + stageNumber;';
+echo '    window.location.href = "2d_phaser3.php?stage=" + stageNumber;';
 echo '}';
 echo 'document.querySelector(".back-button").addEventListener("click", function() {';
 echo '    window.history.back();';
