@@ -38,7 +38,7 @@ class MainScene extends Phaser.Scene {
     const assetList = new Set();
 
     // 背景、プレイヤー、敵、ブロック、ゴールの画像を収集
-    assetList.add({ key: stageData.stage.background.image, path: `img/teststage/${stageData.stage.background.image}.jpg` }); // 変更要
+    assetList.add({ key: stageData.stage.background.image, path: `img/teststage/${stageData.stage.background.image}.png` }); // 変更要
     assetList.add({ key: stageData.player.image, path: `img/teststage/${stageData.player.image}.png` }); 
 
     stageData.blocks.forEach(block => {
@@ -59,6 +59,8 @@ class MainScene extends Phaser.Scene {
     stageData.decorations.forEach(decoration => {
       assetList.add({ key: decoration.image, path: `img/teststage/${decoration.image}.png` });
     });
+
+    assetList.add({ key: 'bullet', path: 'img/teststage/tama.png' });
   
     return Array.from(assetList);
   }
@@ -73,15 +75,17 @@ class MainScene extends Phaser.Scene {
     const { stage, player, blocks, enemies, goal, ground, holes, decorations } = this.stageData;
     this.startTime = this.time.now;
   
+    // JSONから背景画像のスケール値を取得
+    const bgScaleX = stage.background.scaleX || 1;  // JSONの横方向スケール、デフォルトは1
+    const bgScaleY = stage.background.scaleY || 1;  // JSONの縦方向スケール、デフォルトは1
+
     // === 背景のタイルスプライト生成 ===
     this.bg = this.add.tileSprite(
-      -40, 0,                      // 座標 (左上)
-      stage.width + 40, stage.height,  // ステージ全体のサイズ
-      stage.background.image      // 使用する背景画像のキー
-    ).setOrigin(0, 0); // 原点を左上に設定
-
-    // 背景のスケールをJSONから設定
-    this.bg.setScale(stage.background.scaleX, stage.background.scaleY);
+      0, 0,                       // 座標 (左上)
+      stage.width, stage.height,    // ステージ全体のサイズ
+      stage.background.image        // 使用する背景画像のキー
+    ).setOrigin(0, 0)
+    .setScale(bgScaleX, bgScaleY);  // 個別のスケールを設定
 
     // === BGMの再生 ===
     this.bgm = this.sound.add(stage.bgm, { loop: true, volume: 0.1 });
@@ -114,14 +118,47 @@ class MainScene extends Phaser.Scene {
     });
   
     // 敵キャラの生成 (動的グループ)
-    this.enemies = this.physics.add.group();
-    enemies.forEach(enemy => {
-      const e = this.enemies.create(enemy.x, enemy.y, enemy.image)
-        .setScale(enemy.scale)
-        .setVelocityX(enemy.speedX)
+this.enemies = this.physics.add.group();
+enemies.forEach(enemyData => {
+    const enemy = this.enemies.create(enemyData.x, enemyData.y, enemyData.image)
+        .setScale(enemyData.scale)
+        .setVelocityX(enemyData.speedX)
         .setCollideWorldBounds(true)
-        .setBounce(1, 0);  // 壁に当たったら反転
-    });
+        .setBounce(1, 0);
+
+    // fallableプロパティを設定
+    enemy.fallable = enemyData.fallable;
+
+    if (enemy.active && enemy.body && enemy.body.blocked.down) {
+      enemy.setVelocityY(enemyData.jumpHeight);
+    }
+
+    let jumpEvent; // スコープ外で宣言
+
+    // 敵のタイプによる動作設定
+    if (enemyData.type === 'jump') {
+        this.time.addEvent({
+            delay: enemyData.jumpInterval,
+            callback: () => {
+              if (enemy.active && enemy.body && enemy.body.blocked.down) {
+                enemy.setVelocityY(enemyData.jumpHeight);
+              }
+            },
+            loop: true
+        });
+    } else if (enemyData.type === 'shoot') {
+        this.time.addEvent({
+            delay: enemyData.shootInterval,
+            callback: () => this.shootBullet(enemy, enemyData.bulletSpeed, enemyData.bulletImage),
+            loop: true
+        });
+    }
+    enemy.body.world.on('worldbounds', (body) => {
+      if (body.gameObject === enemy) {
+        enemy.destroy(); // 弾がステージ範囲外に出たら削除
+      }
+    })
+});
 
     // デコレーションオブジェクトの生成
     decorations.forEach(decoration => {
@@ -134,6 +171,14 @@ class MainScene extends Phaser.Scene {
   
     // 敵が地面に立つようにコライダーを追加
     this.physics.add.collider(this.enemies, this.ground);
+
+    /// 敵同士の衝突を設定
+    this.physics.add.collider(this.enemies, this.enemies, (enemy1, enemy2) => {
+      // 衝突時に画像を反転（進行方向に合わせる）
+      enemy1.setFlipX(enemy1.body.velocity.x > 0);
+      enemy2.setFlipX(enemy2.body.velocity.x > 0);
+    });
+
   
     // ゴールポールとフラッグの生成
     this.pole = this.physics.add.staticSprite(goal.pole.x, goal.pole.y, goal.pole.image)
@@ -158,7 +203,7 @@ class MainScene extends Phaser.Scene {
   
     // カメラの追従設定
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-    this.cameras.main.setZoom(1.5); // カメラのズームを設定（アップさせる）
+    this.cameras.main.setZoom(0.5); // カメラのズームを設定（アップさせる）
   
     // キーボード入力の取得
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -172,7 +217,7 @@ class MainScene extends Phaser.Scene {
   
     // タイマー表示用のテキストを追加
     this.timerText = this.add.text(10, 10, 'Time: 0.000', { fontSize: '20px', fill: '#fff' });
-    this.timerText.setScrollFactor(0); // カメラに固定
+    // this.timerText.setScrollFactor(0); // カメラに固定
 
     // プレイヤーの当たり判定を小さくする
     this.player.setSize(this.player.width * 0.8, this.player.height * 0.9); // サイズの80％
@@ -185,6 +230,29 @@ class MainScene extends Phaser.Scene {
     });
   }
   
+// 弾を発射するメソッド
+shootBullet(enemy, bulletSpeed, bulletImage) {
+  const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage);
+
+  // 敵の進行方向に合わせて弾の速度を設定
+  // enemy.body.velocity.x が正なら右方向、負なら左方向に進む
+  bullet.setVelocityX(enemy.body.velocity.x !== 0 ? enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed : 0);
+
+  // 弾が重力の影響を受けないように設定
+  bullet.body.setAllowGravity(false);
+
+  // ステージの境界を設定し、ステージ範囲外に出たら自動的に削除する
+  bullet.setCollideWorldBounds(true);
+  bullet.body.onWorldBounds = true;
+  bullet.body.world.on('worldbounds', (body) => {
+    if (body.gameObject === bullet) {
+      bullet.destroy(); // 弾がステージ範囲外に出たら削除
+    }
+  });
+
+  // 弾とプレイヤーの衝突処理
+  this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
+}
   
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {
@@ -265,15 +333,42 @@ class MainScene extends Phaser.Scene {
       return; // これ以上の処理をしない
     }
 
-    this.enemies.getChildren().forEach(enemy => {
-      // 地面に立っているか確認
-      if (enemy.body.blocked.down && enemy.body.touching.down) {
-        enemy.isOnGround = true;
-      } else if (enemy.isOnGround) {
-        enemy.setVelocityX(-enemy.body.velocity.x);
-        enemy.setFlipX(enemy.body.velocity.x > 0);
-        enemy.isOnGround = false;
-      }
+     this.enemies.getChildren().forEach(enemy => {
+        // 敵がステージの底に到達した場合、削除
+        if (enemy.y > (this.physics.world.bounds.height - 30)) {
+            enemy.destroy();
+            return;
+        }
+
+        // ジャンプ中かどうかのフラグを確認または設定
+        if (enemy.body.velocity.y < 0) {
+            enemy.isJumping = true;
+        } else if (enemy.body.blocked.down) {
+            enemy.isJumping = false;
+        }
+
+        if (!enemy.isJumping && enemy.body.blocked.down) {
+            const offset = enemy.body.velocity.x > 0 ? 10 : -10;
+            const footX = enemy.x + offset;
+            const footY = enemy.y + enemy.height / 2 + 5;
+
+            // 進行方向の下に地面があるか確認
+            const hasGroundAhead = this.ground.getChildren().some(ground => 
+                ground.getBounds().contains(footX, footY)
+            );
+
+            if (!hasGroundAhead) {
+                if (enemy.fallable) {
+                    // 落下可能な敵は落下する
+                    enemy.body.checkCollision.down = false;
+                } else {
+                    // 落下不可の敵は反転する
+                    enemy.setVelocityX(-enemy.body.velocity.x);
+                }
+            }
+            // 画像の向きを更新
+            enemy.setFlipX(enemy.body.velocity.x > 0);
+        }
     });
     
     const elapsedTime = (this.time.now - this.startTime) / 1000;
