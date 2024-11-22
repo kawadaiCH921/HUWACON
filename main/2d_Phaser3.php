@@ -2,12 +2,7 @@
 require 'db-connect.php';
 
 try {
-    // POSTからstage_idを取得
-    // 連携前単体用　削除予定
-    $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : 4;
-    
-    // 連携後使用　
-    // $stage_id = isset($_GET['stage']) ? $_GET['stage'] : null;
+    $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : null;
 
     // stage_idが指定されていない場合の処理
     if ($stage_id === null) {
