@@ -59,12 +59,12 @@ echo '<script>';
 echo 'document.querySelector(".back-button").addEventListener("click", function() {';
 echo '    window.history.back();';
 echo '});';
-echo 'function submitStageForm(element) {
-    const form = element.closest('form');
-    if (form) {
-        form.submit();
-    }
-    };'
+echo 'function submitStageForm(element) {';
+echo '    const form = element.closest("form");'; // シングルクォートからダブルクォートへ変更
+echo '    if (form) {';
+echo '        form.submit();';
+echo '    }';
+echo '}';
 echo '</script>';
 
 echo '</body>';
