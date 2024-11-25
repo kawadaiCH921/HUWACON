@@ -1,4 +1,3 @@
-
 // このファイルは変更禁止！！！！！
 // コピーして作ったファイルで変更してください！
 
@@ -63,6 +62,7 @@ class MainScene extends Phaser.Scene {
   
     return Array.from(assetList);
   }
+  
   create() {
     // === すべてのサウンドを停止 ===
     this.sound.stopAll();
@@ -115,49 +115,38 @@ class MainScene extends Phaser.Scene {
         .refreshBody();
     });
   
-    // 敵キャラの生成 (動的グループ)
-this.enemies = this.physics.add.group();
-enemies.forEach(enemyData => {
-    const enemy = this.enemies.create(enemyData.x, enemyData.y, enemyData.image)
-        .setScale(enemyData.scale)
-        .setVelocityX(enemyData.speedX)
-        .setCollideWorldBounds(true)
-        .setBounce(1, 0);
+   // 敵キャラの生成 (動的グループ)
+    this.enemies = this.physics.add.group();
 
-    // fallableプロパティを設定
-    enemy.fallable = enemyData.fallable;
-
-    if (enemy.active && enemy.body && enemy.body.blocked.down) {
-      enemy.setVelocityY(enemyData.jumpHeight);
-    }
-
-    let jumpEvent; // スコープ外で宣言
-
-    // 敵のタイプによる動作設定
-    if (enemyData.type === 'jump') {
-        this.time.addEvent({
-            delay: enemyData.jumpInterval,
-            callback: () => {
-              if (enemy.active && enemy.body && enemy.body.blocked.down) {
-                enemy.setVelocityY(enemyData.jumpHeight);
-              }
-            },
-            loop: true
-        });
-    } else if (enemyData.type === 'shoot') {
-        this.time.addEvent({
-            delay: enemyData.shootInterval,
-            callback: () => this.shootBullet(enemy, enemyData.bulletSpeed, enemyData.bulletImage),
-            loop: true
-        });
-    }
-    enemy.body.world.on('worldbounds', (body) => {
-      if (body.gameObject === enemy) {
-        enemy.destroy(); // 弾がステージ範囲外に出たら削除
+    enemies.forEach(enemyData => {
+      const enemy = this.enemies.create(enemyData.x, enemyData.y, enemyData.image)
+          .setScale(enemyData.scale)
+          .setVelocityX(enemyData.speedX)
+          .setCollideWorldBounds(true)
+          .setBounce(1, 0);
+  
+      enemy.fallable = enemyData.fallable;
+  
+      if (enemyData.type === 'jump') {
+          enemy.jumpTimer = this.time.addEvent({
+              delay: enemyData.jumpInterval,
+              callback: () => {
+                  if (enemy.active && enemy.body && enemy.body.blocked.down) {
+                      enemy.setVelocityY(enemyData.jumpHeight);
+                  }
+              },
+              loop: true,
+              paused: true // 最初は停止
+          });
+      } else if (enemyData.type === 'shoot') {
+          enemy.shootTimer = this.time.addEvent({
+              delay: enemyData.shootInterval,
+              callback: () => this.shootBullet(enemy, enemyData.bulletSpeed, enemyData.bulletImage),
+              loop: true,
+              paused: true // 最初は停止
+          });
       }
-    })
-});
-
+  });
     // デコレーションオブジェクトの生成
     decorations.forEach(decoration => {
       this.add.image(decoration.x, decoration.y, decoration.image)
@@ -230,28 +219,25 @@ enemies.forEach(enemyData => {
   
 // 弾を発射するメソッド
 shootBullet(enemy, bulletSpeed, bulletImage) {
-  const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage);
+  if (!enemy.active) return; // 無効な敵はスキップ
 
-  // 敵の進行方向に合わせて弾の速度を設定
-  // enemy.body.velocity.x が正なら右方向、負なら左方向に進む
-  bullet.setVelocityX(enemy.body.velocity.x !== 0 ? enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed : 0);
+  const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage)
+      .setVelocityX(enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed)
+      .setCollideWorldBounds(true)
+      .setGravity(0, 0);
 
-  // 弾が重力の影響を受けないように設定
-  bullet.body.setAllowGravity(false);
+      bullet.body.setAllowGravity(false);
 
-  // ステージの境界を設定し、ステージ範囲外に出たら自動的に削除する
-  bullet.setCollideWorldBounds(true);
   bullet.body.onWorldBounds = true;
   bullet.body.world.on('worldbounds', (body) => {
-    if (body.gameObject === bullet) {
-      bullet.destroy(); // 弾がステージ範囲外に出たら削除
-    }
+      if (body.gameObject === bullet) {
+          bullet.destroy();
+      }
   });
 
-  // 弾とプレイヤーの衝突処理
   this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
 }
-  
+
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {
     const zone = this.add.zone(hole.x, hole.y, hole.width, hole.height);  // 地面と同じ高さに配置
@@ -323,52 +309,94 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
   
     gameClearSound.play();
   }
+
+  // 敵の進行方向に地面があるか確認
+  checkGroundAhead(enemy, offset) {
+    const footX = enemy.x + offset;
+    const footY = enemy.y + enemy.height / 2 + 5;
+
+    return this.ground.getChildren().some(ground =>
+        ground.getBounds().contains(footX, footY)
+    );
+  }
   
   update() {
     // ゲームオーバーまたはクリアの場合、入力を無効化し、プレイヤーを停止
-    if (this.isGameOver || this.isGameClear) {
-      this.player.setVelocityX(0);
-      return; // これ以上の処理をしない
-    }
+    if (this.isGameOver || this.isGameClear) return;
 
-     this.enemies.getChildren().forEach(enemy => {
-        // 敵がステージの底に到達した場合、削除
-        if (enemy.y > (this.physics.world.bounds.height - 30)) {
-            enemy.destroy();
-            return;
-        }
+    const playerX = this.player.x;
 
-        // ジャンプ中かどうかのフラグを確認または設定
-        if (enemy.body.velocity.y < 0) {
-            enemy.isJumping = true;
-        } else if (enemy.body.blocked.down) {
-            enemy.isJumping = false;
-        }
+    this.enemies.getChildren().forEach(enemy => {
+      const enemyX = enemy.x;
 
-        if (!enemy.isJumping && enemy.body.blocked.down) {
-            const offset = enemy.body.velocity.x > 0 ? 10 : -10;
-            const footX = enemy.x + offset;
-            const footY = enemy.y + enemy.height / 2 + 5;
+      // 敵がアクティブでボディが存在する場合のみ処理を進める
+      if (!enemy.active || !enemy.body) return;
+  
+      // プレイヤーと敵の距離を確認
+      const isNearPlayer = playerX - 550 <= enemyX && enemyX <= playerX + 650;
 
-            // 進行方向の下に地面があるか確認
-            const hasGroundAhead = this.ground.getChildren().some(ground => 
-                ground.getBounds().contains(footX, footY)
-            );
+      // 範囲内の場合、通常の処理を実行
+      enemy.body.setCollideWorldBounds(true); // ワールド内に閉じ込める
+      enemy.body.maxVelocity.y = 2000;       // 落下速度の上限を設定
+      enemy.body.checkCollision.up = true;
+      enemy.body.checkCollision.down = true;
+      enemy.body.checkCollision.left = true;
+      enemy.body.checkCollision.right = true;
+  
+      // 敵がステージの底に到達した場合、削除
+      if (enemy.y > (this.physics.world.bounds.height - 30)) {
+          enemy.destroy();
+          return;
+      }
+  
+      // ジャンプ中かどうかのフラグを確認または設定
+       if (isNearPlayer) {
+            // 処理を再開
+            enemy.body.enable = true;
 
-            if (!hasGroundAhead) {
-                if (enemy.fallable) {
-                    // 落下可能な敵は落下する
-                    enemy.body.checkCollision.down = false;
-                } else {
-                    // 落下不可の敵は反転する
-                    enemy.setVelocityX(-enemy.body.velocity.x);
-                }
+            if (enemy.jumpTimer && !enemy.jumpTimer.running) {
+                enemy.jumpTimer.paused = false; // ジャンプタイマー再開
             }
-            // 画像の向きを更新
-            enemy.setFlipX(enemy.body.velocity.x > 0);
+            if (enemy.shootTimer && !enemy.shootTimer.running) {
+                enemy.shootTimer.paused = false; // シュートタイマー再開
+            }
+
+            // 通常の動作処理
+            if (!enemy.isJumping && enemy.body.blocked.down) {
+              const offset = enemy.body.velocity.x > 0 ? 10 : -10;
+              const scaledHeight = enemy.height * enemy.scaleY; // スケールを考慮
+              const footX = enemy.x + offset;
+              const footY = enemy.y + scaledHeight / 2 + 5;
+
+                // 足元に地面があるか判定
+                const hasGroundAhead = this.ground.getChildren().some(ground =>
+                    ground.getBounds().contains(footX, footY)
+                );
+
+                if (!hasGroundAhead) {
+                    if (enemy.fallable) {
+                        enemy.body.checkCollision.down = false; // 落下可能
+                    } else {
+                        enemy.setVelocityX(-enemy.body.velocity.x); // 方向反転
+                    }
+                }
+
+                // 向きを更新
+                enemy.setFlipX(enemy.body.velocity.x > 0);
+            }
+        } else {
+            // 処理を停止
+            enemy.body.enable = false;
+
+            if (enemy.jumpTimer && enemy.jumpTimer.running) {
+                enemy.jumpTimer.paused = true; // ジャンプタイマー停止
+            }
+            if (enemy.shootTimer && enemy.shootTimer.running) {
+                enemy.shootTimer.paused = true; // シュートタイマー停止
+            }
         }
     });
-    
+
     const elapsedTime = (this.time.now - this.startTime) / 1000;
     const hours = Math.floor(elapsedTime / 3600);
     const minutes = Math.floor(elapsedTime / 60);
@@ -462,7 +490,14 @@ const config = {
     default: 'arcade', // Arcade 物理エンジンを使用
     arcade: {
       gravity: { y: 1000 }, // 重力の設定
-      debug: false,          // デバッグ用の当たり判定表示をオン
+      debug: true,
+      tileBias: 64, // 衝突検出のバイアス (タイルの大きさを基準に設定)
+      checkCollision: {
+        up: true,
+        down: true,
+        left: true,
+        right: true 
+      }
     },
   },
   scale: {
