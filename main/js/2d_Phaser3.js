@@ -365,9 +365,10 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 
             // 通常の動作処理
             if (!enemy.isJumping && enemy.body.blocked.down) {
-                const offset = enemy.body.velocity.x > 0 ? 10 : -10;
-                const footX = enemy.x + offset;
-                const footY = enemy.y + enemy.height / 2 + 5;
+              const offset = enemy.body.velocity.x > 0 ? 10 : -10;
+              const scaledHeight = enemy.height * enemy.scaleY; // スケールを考慮
+              const footX = enemy.x + offset;
+              const footY = enemy.y + scaledHeight / 2 + 5;
 
                 // 足元に地面があるか判定
                 const hasGroundAhead = this.ground.getChildren().some(ground =>
