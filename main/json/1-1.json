@@ -9,7 +9,7 @@
 
   "_comment": "プレイヤー情報「X・Y(横、縦)、プレイヤーサイズ、プレイヤー画像」",
   "player": {
-    "x": 200,
+    "x": 6600,
     "y": 500,
     "scale": 1.5,
     "image": "player"
@@ -200,10 +200,10 @@
     { "x": 5300, "y": 750, "scale": 1.5, "speedX": -80, "image": "enemy", "type": "normal", "fallable": false  },
     { "x": 5400, "y": 750, "scale": 2, "speedX": -80, "image": "enemy", "type": "normal", "fallable": false  },
     { "x": 5550, "y": 750, "scale": 3, "speedX": -80, "image": "enemy", "type": "normal", "fallable": false  },
-    { "x": 6350, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false },
-    { "x": 6650, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  },
-    { "x": 6950, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  },
-    { "x": 7250, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  }
+    { "x": 6400, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false },
+    { "x": 6700, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  },
+    { "x": 7000, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  },
+    { "x": 7300, "y": 750, "scale": 3, "speedX": -170, "image": "enemy", "type": "normal", "fallable": false  }
   
   ],
 

@@ -1,22 +1,23 @@
 <?php
 session_start();
 
-// game.phpから送られてきたクリアタイムを受け取りCookieに保存
-if (isset($_POST['clear_time'])) {
-  $clear_time = $_POST['clear_time'];
-  setcookie('clear_time', $clear_time, time() + 3600, "/"); // 1時間の有効期限
-  echo "POSTからクリアタイムが取得されました: " . htmlspecialchars($clear_time);
+// JSONデータを受け取る
+$data = json_decode(file_get_contents('php://input'), true);
+
+// クリアタイムを取得
+if (isset($data['time'])) {
+    $clearTime = $data['time'];
+    echo "クリアタイム: {$clearTime} 秒";
 } else {
-  // 単体用コード 削除予定
-  $clear_time = 200; // テスト用クリアタイム
-  setcookie('clear_time', $clear_time, time() + 3600, "/"); // 1時間の有効期限
-  echo "POSTデータが存在しないため、テスト用クリアタイム200が設定されました。";
+    echo "エラー: タイムデータが送信されていません！";
 }
 
+// DB接続ファイルを読み込む
+require 'db-connect.php'; // USER, PASS, DB_NAMEが定義されているファイル
 
-require 'db-connect.php';
 try {
-    $pdo = new PDO($connect, USER, PASS);
+    // PDOを使ったデータベース接続
+    $pdo = new PDO($connect, user, pass);
 
     // ステージ情報を取得
     $stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = 1");
@@ -27,6 +28,7 @@ try {
     echo "エラー: " . htmlspecialchars($e->getMessage());
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +47,7 @@ try {
   <!-- 次のページへ送信するためのフォーム -->
   <form id="nextPageForm" action="ranking-input.php" method="POST" style="display: none;">
       <input type="hidden" name="stage" value="<?php echo htmlspecialchars($stage_id); ?>">
-      <input type="hidden" name="clear_time" value="<?php echo htmlspecialchars($clear_time); ?>">
+      <input type="hidden" name="clear_time" value="<?php echo htmlspecialchars($clearTime); ?>">
   </form>
 </body>
 </html>

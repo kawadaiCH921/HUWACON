@@ -221,12 +221,16 @@ class MainScene extends Phaser.Scene {
 shootBullet(enemy, bulletSpeed, bulletImage) {
   if (!enemy.active) return; // 無効な敵はスキップ
 
+  const direction = enemy.body.velocity.x > 0 ? 1 : -1; // 敵の進行方向を確認
   const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage)
-      .setVelocityX(enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed)
+      .setVelocityX(direction * bulletSpeed) // 弾丸の速度を設定
       .setCollideWorldBounds(true)
       .setGravity(0, 0);
 
-      bullet.body.setAllowGravity(false);
+  bullet.body.setAllowGravity(false);
+
+  // 弾丸の向きを進行方向に合わせる
+  bullet.setFlipX(direction < 0);
 
   bullet.body.onWorldBounds = true;
   bullet.body.world.on('worldbounds', (body) => {
@@ -237,6 +241,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 
   this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
 }
+
 
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {
@@ -333,7 +338,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
       if (!enemy.active || !enemy.body) return;
   
       // プレイヤーと敵の距離を確認
-      const isNearPlayer = playerX - 550 <= enemyX && enemyX <= playerX + 650;
+      const isNearPlayer = playerX - 550 <= enemyX && enemyX <= playerX + 675;
 
       // 範囲内の場合、通常の処理を実行
       enemy.body.setCollideWorldBounds(true); // ワールド内に閉じ込める
@@ -432,29 +437,38 @@ class ClearScene extends Phaser.Scene {
   }
 
   create(data) {
-  const time = data.time || 0; // 渡された経過時間（秒）を取得
-  const hours = Math.floor(time / 3600); // 時間
-  const minutes = Math.floor((time % 3600) / 60); // 分
-  const seconds = Math.floor(time % 60); // 秒
+    const time = data.time || 0; // 渡された経過時間（秒）を取得
+    const hours = Math.floor(time / 3600); // 時間
+    const minutes = Math.floor((time % 3600) / 60); // 分
+    const seconds = Math.floor(time % 60); // 秒
+  
+    // 経過時間の表示
+    this.add.text(config.width / 2 , (config.height / 2) - 50, 
+      `Game Clear!`, 
+      { fontSize: '48px', fill: '#fff' }
+    ).setOrigin(0.5);
+  
+    this.add.text(config.width / 2, (config.height / 2) + 50,
+      `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
+      { fontSize: '48px', fill: '#fff' }
+    ).setOrigin(0.5);
+  
+    const timeData = { time: time };
 
-  // 経過時間の表示
-  this.add.text(config.width / 2 , (config.height / 2) - 50, 
-    `Game Clear!`, 
-    { fontSize: '48px', fill: '#fff' }
-  ).setOrigin(0.5); // 中央に配置;
-
-  this.add.text(config.width / 2, (config.height / 2) + 50,
-    `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
-    { fontSize: '48px', fill: '#fff' }
-  ).setOrigin(0.5); // 中央に配置;
-
-  // クリックまたはスペースキーで再スタート
-  this.input.once('pointerdown', () => {
-      this.scene.start('MainScene');
-    });
-    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    this.spaceKey.on('down', () => {
-      this.scene.start('MainScene');
+    // fetch でタイムを送信
+    fetch('./clear.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(timeData),
+    })
+    .then(() => {
+      // PHPへの送信が成功したらリダイレクト
+      window.location.href = './clear.php'; // clear.php に遷移
+    })
+    .catch((error) => {
+      console.error('Error:', error); // エラー時のログ
     });
   }
 }
@@ -490,7 +504,7 @@ const config = {
     default: 'arcade', // Arcade 物理エンジンを使用
     arcade: {
       gravity: { y: 1000 }, // 重力の設定
-      debug: true,
+      debug: false,
       tileBias: 64, // 衝突検出のバイアス (タイルの大きさを基準に設定)
       checkCollision: {
         up: true,
