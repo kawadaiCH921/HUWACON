@@ -228,12 +228,16 @@ class MainScene extends Phaser.Scene {
 shootBullet(enemy, bulletSpeed, bulletImage) {
   if (!enemy.active) return; // 無効な敵はスキップ
 
+  const direction = enemy.body.velocity.x > 0 ? 1 : -1; // 敵の進行方向を確認
   const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage)
-      .setVelocityX(enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed)
+      .setVelocityX(direction * bulletSpeed) // 弾丸の速度を設定
       .setCollideWorldBounds(true)
       .setGravity(0, 0);
 
-      bullet.body.setAllowGravity(false);
+  bullet.body.setAllowGravity(false);
+
+  // 弾丸の向きを進行方向に合わせる
+  bullet.setFlipX(direction < 0);
 
   bullet.body.onWorldBounds = true;
   bullet.body.world.on('worldbounds', (body) => {
@@ -244,6 +248,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 
   this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
 }
+
 
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {
