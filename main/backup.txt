@@ -64,8 +64,6 @@ class MainScene extends Phaser.Scene {
     stageData.decorations.forEach(decoration => {
       assetList.add({ key: decoration.image, path: `img/teststage/${decoration.image}.png` });
     });
-
-    assetList.add({ key: 'bullet', path: 'img/teststage/tama.png' });
   
     return Array.from(assetList);
   }
@@ -225,25 +223,34 @@ class MainScene extends Phaser.Scene {
   }
   
 // 弾を発射するメソッド
-shootBullet(enemy, bulletSpeed, bulletImage) {
-  if (!enemy.active) return; // 無効な敵はスキップ
+shootBullet(enemy, bulletSpeed) {
+  if (!enemy.active) return;
 
+  // 弾丸の向きに基づく速度設定
+  const direction = enemy.body.velocity.x >= 0 ? 1 : -1; // 右向きなら1、左向きなら-1
+  const bulletImage = enemy.bulletImage; // JSONで指定された弾丸画像
+
+  // 弾丸スプライトの作成
   const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage)
-      .setVelocityX(enemy.body.velocity.x > 0 ? bulletSpeed : -bulletSpeed)
+      .setVelocityX(bulletSpeed * direction) // 進行方向に速度を設定
       .setCollideWorldBounds(true)
       .setGravity(0, 0);
 
-      bullet.body.setAllowGravity(false);
+  // 弾丸の向きを反転（左向きなら反転）
+  bullet.setFlipX(direction < 0);
 
+  // 弾丸がワールド境界に達したら削除
+  bullet.body.setAllowGravity(false);
   bullet.body.onWorldBounds = true;
   bullet.body.world.on('worldbounds', (body) => {
       if (body.gameObject === bullet) {
           bullet.destroy();
       }
   });
-
+  // 弾丸とプレイヤーの衝突を処理
   this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
 }
+
 
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {

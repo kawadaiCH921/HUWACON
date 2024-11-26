@@ -43,10 +43,10 @@
   "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
   "enemies": [
     { "x": 150, "y": 100, "scale": 1.2, "speedX": 500, "image": "enemy", "type": "normal", "fallable": true },
-    { "x": 10, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "bullet", "fallable": false },
+    { "x": 10, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false },
     { "x": 550, "y": 750, "scale": 1.5, "speedX": -100, "image": "enemy", "type": "jump", "jumpHeight": -500, "jumpInterval": 2500, "fallable": false },
     { "x": 620, "y": 750, "scale": 1.5, "speedX": 200, "image": "enemy", "type": "jump", "jumpHeight": -500, "jumpInterval": 2500, "fallable": false },
-    { "x": 600, "y": 750, "scale": 1, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "bullet", "fallable": false }
+    { "x": 600, "y": 750, "scale": 1, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false }
   ],
 
   "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
