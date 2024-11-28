@@ -453,24 +453,10 @@ class ClearScene extends Phaser.Scene {
       { fontSize: '48px', fill: '#fff' }
     ).setOrigin(0.5);
   
-    const timeData = { time: time };
-
-    // fetch でタイムを送信
-    fetch('./clear.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(timeData),
-    })
-    .then(() => {
-      // PHPへの送信が成功したらリダイレクト
-      window.location.href = './clear.php'; // clear.php に遷移
-    })
-    .catch((error) => {
-      console.error('Error:', error); // エラー時のログ
-    });
-  }
+    // URLパラメータにクリアタイムを含めて遷移
+    const clearTimeParam = encodeURIComponent(time); // クリアタイムをエンコード
+    window.location.href = `./clear.php?time=${clearTimeParam}`; // GETパラメータとして送信
+  }  
 }
 
 class OverScene extends Phaser.Scene {

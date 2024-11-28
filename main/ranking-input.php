@@ -5,6 +5,7 @@ $success = false;  // 登録が成功したかを示すフラグ
 
 // clear.phpから送られたクリアタイムを取得
 $clear_time = $_POST['clear_time'] ?? $_COOKIE['clear_time'] ?? '';
+$clear_time = intval($clear_time); // 小数点以下を切り捨てて整数型に変換
 
 // Cookieに保存されたcookie_idを取得、なければ新しく生成してCookieに保存
 if (isset($_COOKIE['cookie_id'])) {
@@ -22,13 +23,14 @@ $pdo = new PDO($connect, USER, PASS);
 $formatted_time = gmdate("H:i:s", $clear_time);
 
 // ステージ情報を取得
-$stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = 1");
+$stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = :stage_id");
+$stmt->bindParam(':stage_id', $stage_id, PDO::PARAM_INT);
 $stmt->execute();
 $stage = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信された場合に処理を開始
     try {
-        $stage_id = 1; // ステージIDを設定 編集予定
+        $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : 1;
         $user_name = $_POST['name'];
         
         // cookie_idが存在するか確認
@@ -37,6 +39,15 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
             ':cookie_id' => $cookie_id,
             ':stage_id' => $stage_id,
         ]);
+
+        // stage_idの存在確認
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM stage WHERE stage_id = :stage_id");
+        $stmt->execute([':stage_id' => $stage_id]);
+        if ($stmt->fetchColumn() == 0) {
+            echo "エラー: 指定されたstage_idは存在しません。";
+            exit;
+        }
+
         
         if ($stmt->rowCount() > 0) {
             // cookie_id存在する場合、UPDATEでクリアタイムを更新
@@ -80,8 +91,8 @@ if (isset($_POST['name']) && !empty($_POST['name'])) {  // nameが送信され�
       <input type="hidden" name="stage_id" value="<?php echo $stage['stage_id']; ?>"> <!-- ステージIDを送信 -->
     <div id="push">
         <button type="submit">登録</button>
-        <button type="button" onclick="location.href='nextpage.html'">ランキング</button>
-        <button type="button" onclick="location.href='nextpage.html'">ステージ選択</button> <!-- ステージ選択はリンクにする -->
+        <button type="button" onclick="location.href='ranking.php'">ランキング</button>
+        <button type="button" onclick="location.href='stageSelect.php'">ステージ選択</button> <!-- ステージ選択はリンクにする -->
     </div>
   </form>
   
