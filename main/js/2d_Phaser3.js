@@ -133,6 +133,14 @@ class MainScene extends Phaser.Scene {
           .setBounce(1, 0);
   
       enemy.fallable = enemyData.fallable;
+      enemy.blockCollision = enemyData.blockCollision;
+
+      if (enemy.blockCollision) {
+        enemy.body.checkCollision.left = false;
+        enemy.body.checkCollision.right = false;
+      } else {
+        this.physics.add.collider(enemy, this.blocks);
+      }
   
       if (enemyData.type === 'jump') {
           enemy.jumpTimer = this.time.addEvent({
@@ -161,7 +169,7 @@ class MainScene extends Phaser.Scene {
     });
 
     // 敵とブロックの衝突を設定
-    this.physics.add.collider(this.enemies, this.blocks);
+    // this.physics.add.collider(this.enemies, this.blocks);
   
     // 敵が地面に立つようにコライダーを追加
     this.physics.add.collider(this.enemies, this.ground);
