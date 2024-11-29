@@ -197,7 +197,7 @@ class MainScene extends Phaser.Scene {
   
     // カメラの追従設定
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-    this.cameras.main.setZoom(1.5); // カメラのズームを設定（アップさせる）
+    this.cameras.main.setZoom(0.5); // カメラのズームを設定（アップさせる）
   
     // キーボード入力の取得
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -421,8 +421,10 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 
     if (this.cursors.left.isDown || left.isDown) {
       this.player.setVelocityX(-200);
+      this.player.setFlipX(true); // 左を向く
     } else if (this.cursors.right.isDown || right.isDown) {
       this.player.setVelocityX(200);
+      this.player.setFlipX(false); // 右を向く
     } else {
       this.player.setVelocityX(0);
     }
@@ -468,6 +470,10 @@ class ClearScene extends Phaser.Scene {
     this.spaceKey.on('down', () => {
       this.scene.start('MainScene');
     });
+
+    // URLパラメータにクリアタイムを含めて遷移
+    const clearTimeParam = encodeURIComponent(time); // クリアタイムをエンコード
+    window.location.href = `./clear.php?time=${clearTimeParam}`; // GETパラメータとして送信
   }
 }
 
