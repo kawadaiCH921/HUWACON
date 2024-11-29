@@ -36,6 +36,9 @@ try {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phaser 3 スクロールアクション</title>
+  <form id="nextPageForm" action="clear.php" method="POST" style="display: none;">
+      <input type="hidden" id="stage_id" name="stage_id" value="<?php echo htmlspecialchars($stage_id); ?>">
+  </form>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
   <script src="js/<?php echo htmlspecialchars($stage['stage_name']) ?>.js" defer></script>
 </head>

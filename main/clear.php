@@ -10,6 +10,11 @@ if ($clearTime === null) {
     exit;
 }
 
+// デバッグ用
+error_log("DEBUG: _GET data: " . print_r($_GET, true));
+error_log("DEBUG: _POST data: " . print_r($_POST, true));
+
+
 // DB接続ファイルを読み込む
 require 'db-connect.php';
 
