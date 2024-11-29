@@ -9,15 +9,14 @@
 <body>
     <div class="container">
         <div class="robot-icon">
-            <img src="css/img/logo.png" alt="Robot Icon">
+            <img src="img/logo.png" alt="Robot Icon">
         </div>
         <button class="start-button" onclick="startGame()">Click to Start</button>
     </div>
 
     <script>
         function startGame() {
-            // ゲーム開始の処理をここに記述します
-            alert('ゲームが開始されました');
+            window.location.href = 'MainMenu.php'; // 遷移先を指定
         }
     </script>
 </body>
