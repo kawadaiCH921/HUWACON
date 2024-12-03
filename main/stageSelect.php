@@ -57,7 +57,7 @@ echo '</div>';
 // バックボタンのJavaScriptのみ残す
 echo '<script>';
 echo 'document.querySelector(".back-button").addEventListener("click", function() {';
-echo '    window.history.back();';
+echo '    window.location.href="MainMenu.php";';
 echo '});';
 echo 'function submitStageForm(element) {';
 echo '    const form = element.closest("form");'; // シングルクォートからダブルクォートへ変更
