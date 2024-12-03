@@ -34,11 +34,11 @@ if (isset($_COOKIE['cookie_id'])) {
 }
 
 // ステージIDの取得（POST、GET、デフォルトの順で取得）
-$stage_id = isset($_POST['stage_id']) ? intval($_POST['stage_id']) : (isset($_GET['stage_id']) ? intval($_GET['stage_id']) : 1);
+$stage_id = isset($_POST['stage_id']) ? intval($_POST['stage_id']) : (isset($_GET['stage_id']) ? intval($_GET['stage_id']) : null);
 
 // データベースに接続
-require 'DB-connect.php';
-$pdo = new PDO($connect, USER, PASS);
+require 'db-connect.php';
+$pdo = new PDO($connect, user, pass);
 
 // ステージが存在するか確認
 $stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = :stage_id");
