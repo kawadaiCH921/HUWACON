@@ -1,3 +1,4 @@
+
 // このファイルは変更禁止！！！！！
 // コピーして作ったファイルで変更してください！
 
@@ -47,15 +48,23 @@ class MainScene extends Phaser.Scene {
 
     stageData.enemies.forEach(enemy => {
       assetList.add({ key: enemy.image, path: `img/1-4/${enemy.image}.png` }); // 変更要
+      // 弾丸画像を追加
+      if (enemy.bulletImage) {
+        assetList.add({ key: enemy.bulletImage, path: `img/1-4/${enemy.bulletImage}.png` });
+      }
     });
 
     stageData.ground.forEach(ground => {
       assetList.add({ key: ground.image, path: `img/1-4/${ground.image}.png` }); // 変更要
     });
 
-    assetList.add({ key: stageData.goal.pole.image, path: `img/goals/${stageData.goal.pole.image}.png` });
-    assetList.add({ key: stageData.goal.flag.image, path: `img/goals/${stageData.goal.flag.image}.png` });
+    assetList.add({ key: stageData.goal.pole.image, path: `img/1-4/${stageData.goal.pole.image}.png` });
+    assetList.add({ key: stageData.goal.flag.image, path: `img/1-4/${stageData.goal.flag.image}.png` });
 
+    stageData.decorations.forEach(decoration => {
+      assetList.add({ key: decoration.image, path: `img/1-4/${decoration.image}.png` });
+    });
+  
     return Array.from(assetList);
   }
 
@@ -66,15 +75,20 @@ class MainScene extends Phaser.Scene {
     this.isGameClear = false; // ゲームオーバーフラグを設定
     this.input.keyboard.enabled = true; // キーボード入力を有効化
     
-    const { stage, player, blocks, enemies, goal, ground, holes } = this.stageData;
+    const { stage, player, blocks, enemies, goal, ground, holes, decorations } = this.stageData;
     this.startTime = this.time.now;
   
+    // JSONから背景画像のスケール値を取得
+    const bgScaleX = stage.background.scaleX || 1;  // JSONの横方向スケール、デフォルトは1
+    const bgScaleY = stage.background.scaleY || 1;  // JSONの縦方向スケール、デフォルトは1
+
     // === 背景のタイルスプライト生成 ===
     this.bg = this.add.tileSprite(
-      -40, 0,                      // 座標 (左上)
-      stage.width + 40, stage.height,  // ステージ全体のサイズ
-      stage.background.image      // 使用する背景画像のキー
-    ).setOrigin(0, 0); // 原点を左上に設定
+      0, 0,                       // 座標 (左上)
+      stage.width, stage.height,    // ステージ全体のサイズ
+      stage.background.image        // 使用する背景画像のキー
+    ).setOrigin(0, 0)
+    .setScale(bgScaleX, bgScaleY);  // 個別のスケールを設定
 
     // === BGMの再生 ===
     this.bgm = this.sound.add(stage.bgm, { loop: true, volume: 0.1 });
@@ -108,19 +122,63 @@ class MainScene extends Phaser.Scene {
   
     // 敵キャラの生成 (動的グループ)
     this.enemies = this.physics.add.group();
-    enemies.forEach(enemy => {
-      const e = this.enemies.create(enemy.x, enemy.y, enemy.image)
-        .setScale(enemy.scale)
-        .setVelocityX(enemy.speedX)
-        .setCollideWorldBounds(true)
-        .setBounce(1, 0);  // 壁に当たったら反転
-    });
+
+    enemies.forEach(enemyData => {
+      const enemy = this.enemies.create(enemyData.x, enemyData.y, enemyData.image)
+          .setScale(enemyData.scale)
+          .setVelocityX(enemyData.speedX)
+          .setCollideWorldBounds(true)
+          .setBounce(1, 0);
   
+      enemy.fallable = enemyData.fallable;
+      enemy.blockCollision = enemyData.blockCollision;
+
+      if (enemy.blockCollision) {
+        enemy.body.checkCollision.left = false;
+        enemy.body.checkCollision.right = false;
+      } else {
+        this.physics.add.collider(enemy, this.blocks);
+      }
+  
+      if (enemyData.type === 'jump') {
+          enemy.jumpTimer = this.time.addEvent({
+              delay: enemyData.jumpInterval,
+              callback: () => {
+                  if (enemy.active && enemy.body && enemy.body.blocked.down) {
+                      enemy.setVelocityY(enemyData.jumpHeight);
+                  }
+              },
+              loop: true,
+              paused: true // 最初は停止
+          });
+      } else if (enemyData.type === 'shoot') {
+          enemy.shootTimer = this.time.addEvent({
+              delay: enemyData.shootInterval,
+              callback: () => this.shootBullet(enemy, enemyData.bulletSpeed, enemyData.bulletImage),
+              loop: true,
+              paused: true // 最初は停止
+          });
+      }
+  });
+    // デコレーションオブジェクトの生成
+    decorations.forEach(decoration => {
+      this.add.image(decoration.x, decoration.y, decoration.image)
+      .setDisplaySize(decoration.width, decoration.height);
+    });
+
     // 敵とブロックの衝突を設定
-    this.physics.add.collider(this.enemies, this.blocks);
+    // this.physics.add.collider(this.enemies, this.blocks);
   
     // 敵が地面に立つようにコライダーを追加
     this.physics.add.collider(this.enemies, this.ground);
+
+    /// 敵同士の衝突を設定
+    this.physics.add.collider(this.enemies, this.enemies, (enemy1, enemy2) => {
+      // 衝突時に画像を反転（進行方向に合わせる）
+      enemy1.setFlipX(enemy1.body.velocity.x > 0);
+      enemy2.setFlipX(enemy2.body.velocity.x > 0);
+    });
+
   
     // ゴールポールとフラッグの生成
     this.pole = this.physics.add.staticSprite(goal.pole.x, goal.pole.y, goal.pole.image)
@@ -145,7 +203,7 @@ class MainScene extends Phaser.Scene {
   
     // カメラの追従設定
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-    this.cameras.main.setZoom(1.5); // カメラのズームを設定（アップさせる）
+    this.cameras.main.setZoom(1.0); // カメラのズームを設定（アップさせる）
   
     // キーボード入力の取得
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -159,13 +217,48 @@ class MainScene extends Phaser.Scene {
   
     // タイマー表示用のテキストを追加
     this.timerText = this.add.text(10, 10, 'Time: 0.000', { fontSize: '20px', fill: '#fff' });
-    this.timerText.setScrollFactor(0); // カメラに固定
+    // this.timerText.setScrollFactor(0); // カメラに固定
+
+    // プレイヤーの当たり判定を小さくする
+    this.player.setSize(this.player.width * 0.8, this.player.height * 0.9); // サイズの80％
+    this.player.setOffset(this.player.width * 0.1, this.player.height * 0.1); // オフセットを調整
+
+    // 敵の当たり判定を小さくする
+    this.enemies.getChildren().forEach(enemy => {
+      enemy.setSize(enemy.width * 0.8, enemy.height * 0.8); // サイズの80％
+      enemy.setOffset(enemy.width * 0.1, enemy.height * 0.1); // オフセットを調整
+    });
   }
   
-  
+// 弾を発射するメソッド
+shootBullet(enemy, bulletSpeed, bulletImage) {
+  if (!enemy.active) return; // 無効な敵はスキップ
+
+  const direction = enemy.body.velocity.x > 0 ? 1 : -1; // 敵の進行方向を確認
+  const bullet = this.physics.add.sprite(enemy.x, enemy.y, bulletImage)
+      .setVelocityX(direction * bulletSpeed) // 弾丸の速度を設定
+      .setCollideWorldBounds(true)
+      .setGravity(0, 0);
+
+  bullet.body.setAllowGravity(false);
+
+  // 弾丸の向きを進行方向に合わせる
+  bullet.setFlipX(direction < 0);
+
+  bullet.body.onWorldBounds = true;
+  bullet.body.world.on('worldbounds', (body) => {
+      if (body.gameObject === bullet) {
+          bullet.destroy();
+      }
+  });
+
+  this.physics.add.overlap(this.player, bullet, this.onPlayerHit, null, this);
+}
+
+
   // 穴のゾーンを生成する関数
   createHoleZone(hole) {
-    const zone = this.add.zone(hole.x, hole.y, hole.width, 50);  // 地面と同じ高さに配置
+    const zone = this.add.zone(hole.x, hole.y, hole.width, hole.height);  // 地面と同じ高さに配置
     this.physics.world.enable(zone);
     zone.body.setAllowGravity(false);  // 重力の影響を受けない
     zone.body.moves = false;  // 動かないように設定
@@ -234,13 +327,93 @@ class MainScene extends Phaser.Scene {
   
     gameClearSound.play();
   }
+
+  // 敵の進行方向に地面があるか確認
+  checkGroundAhead(enemy, offset) {
+    const footX = enemy.x + offset;
+    const footY = enemy.y + enemy.height / 2 + 5;
+
+    return this.ground.getChildren().some(ground =>
+        ground.getBounds().contains(footX, footY)
+    );
+  }
   
   update() {
     // ゲームオーバーまたはクリアの場合、入力を無効化し、プレイヤーを停止
-    if (this.isGameOver || this.isGameClear) {
-      this.player.setVelocityX(0);
-      return; // これ以上の処理をしない
-    }
+    if (this.isGameOver || this.isGameClear) return;
+
+    const playerX = this.player.x;
+
+    this.enemies.getChildren().forEach(enemy => {
+      const enemyX = enemy.x;
+
+      // 敵がアクティブでボディが存在する場合のみ処理を進める
+      if (!enemy.active || !enemy.body) return;
+  
+      // プレイヤーと敵の距離を確認
+      const isNearPlayer = "";
+
+      // 範囲内の場合、通常の処理を実行
+      enemy.body.setCollideWorldBounds(true); // ワールド内に閉じ込める
+      enemy.body.maxVelocity.y = 2000;       // 落下速度の上限を設定
+      enemy.body.checkCollision.up = true;
+      enemy.body.checkCollision.down = true;
+      enemy.body.checkCollision.left = true;
+      enemy.body.checkCollision.right = true;
+  
+      // 敵がステージの底に到達した場合、削除
+      if (enemy.y > (this.physics.world.bounds.height - 30)) {
+          enemy.destroy();
+          return;
+      }
+  
+      // ジャンプ中かどうかのフラグを確認または設定
+       if (!isNearPlayer) {
+            // 処理を再開
+            enemy.body.enable = true;
+
+            if (enemy.jumpTimer && !enemy.jumpTimer.running) {
+                enemy.jumpTimer.paused = false; // ジャンプタイマー再開
+            }
+            if (enemy.shootTimer && !enemy.shootTimer.running) {
+                enemy.shootTimer.paused = false; // シュートタイマー再開
+            }
+
+            // 通常の動作処理
+            if (!enemy.isJumping && enemy.body.blocked.down) {
+              const offset = enemy.body.velocity.x > 0 ? 10 : -10;
+              const scaledHeight = enemy.height * enemy.scaleY; // スケールを考慮
+              const footX = enemy.x + offset;
+              const footY = enemy.y + scaledHeight / 2 + 5;
+
+                // 足元に地面があるか判定
+                const hasGroundAhead = this.ground.getChildren().some(ground =>
+                    ground.getBounds().contains(footX, footY)
+                );
+
+                if (!hasGroundAhead) {
+                    if (enemy.fallable) {
+                        enemy.body.checkCollision.down = false; // 落下可能
+                    } else {
+                        enemy.setVelocityX(-enemy.body.velocity.x); // 方向反転
+                    }
+                }
+
+                // 向きを更新
+                enemy.setFlipX(enemy.body.velocity.x > 0);
+            }
+        } else {
+            // 処理を停止
+            enemy.body.enable = false;
+
+            if (enemy.jumpTimer && enemy.jumpTimer.running) {
+                enemy.jumpTimer.paused = true; // ジャンプタイマー停止
+            }
+            if (enemy.shootTimer && enemy.shootTimer.running) {
+                enemy.shootTimer.paused = true; // シュートタイマー停止
+            }
+        }
+    });
 
     const elapsedTime = (this.time.now - this.startTime) / 1000;
     const hours = Math.floor(elapsedTime / 3600);
@@ -293,8 +466,8 @@ class ClearScene extends Phaser.Scene {
     { fontSize: '48px', fill: '#fff' }
   ).setOrigin(0.5); // 中央に配置;
 
-    // クリックまたはスペースキーで再スタート
-    this.input.once('pointerdown', () => {
+  // クリックまたはスペースキーで再スタート
+  this.input.once('pointerdown', () => {
       this.scene.start('MainScene');
     });
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -335,7 +508,14 @@ const config = {
     default: 'arcade', // Arcade 物理エンジンを使用
     arcade: {
       gravity: { y: 1000 }, // 重力の設定
-      debug: false,          // デバッグ用の当たり判定表示をオン
+      debug: false,
+      tileBias: 64, // 衝突検出のバイアス (タイルの大きさを基準に設定)
+      checkCollision: {
+        up: true,
+        down: true,
+        left: true,
+        right: true 
+      }
     },
   },
   scale: {
