@@ -10,7 +10,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'ゲスト';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>操作説明</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/help.css">
 </head>
 <body>
     <div class="instructions">
@@ -21,7 +21,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'ゲスト';
             <li>D：右に移動</li>
             <li>W or Space：ジャンプ</li>
         </ul>
-        <a href="menu.php" class="back-button">戻る</a>
+        <a href="MainMenu.php" class="back-button">戻る</a>
     </div>
 </body>
 </html>
