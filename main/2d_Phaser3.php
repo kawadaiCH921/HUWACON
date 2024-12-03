@@ -2,12 +2,7 @@
 require 'db-connect.php';
 
 try {
-    // POSTからstage_idを取得
-    // 連携前単体用　削除予定
-    $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : 4;
-    
-    // 連携後使用　
-    // $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : null;
+    $stage_id = isset($_POST['stage_id']) ? $_POST['stage_id'] : null;
 
     // stage_idが指定されていない場合の処理
     if ($stage_id === null) {
@@ -41,6 +36,9 @@ try {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phaser 3 スクロールアクション</title>
+  <form id="nextPageForm" action="clear.php" method="POST" style="display: none;">
+      <input type="hidden" id="stage_id" name="stage_id" value="<?php echo htmlspecialchars($stage_id); ?>">
+  </form>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
   <script src="js/<?php echo htmlspecialchars($stage['stage_name']) ?>.js" defer></script>
 </head>

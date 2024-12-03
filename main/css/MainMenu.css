@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+body {
+    font-family: 'DotGothic16', sans-serif;
+    background-image: url(../img/MainBack.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.info-button {
+    font-weight: bold;
+    font-size: 32px;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+}
+
+.info-button:hover {
+    background-color: #808080;
+}
+
+.title {
+    font-weight: 900;
+    font-size: 150px;
+    color: rgb(255,234,0);
+    letter-spacing: 15px;
+    text-align: center;
+    -webkit-text-stroke: 4px rgb(255,234,0);
+    text-shadow: 
+        -7px -7px 0 black, 
+         7px -7px 0 black, 
+        -7px  7px 0 black, 
+         7px  7px 0 black,
+        -7px  0px 0 black,
+         7px  0px 0 black, 
+         0px -7px 0 black, 
+         0px  7px 0 black;
+}
+
+/* ボタンを絶対位置で調整 */
+.button-container {
+    /*position: absolute;
+    top: 500px; /* 画面上の配置位置を調整 */
+    transform: translateY(-50%); /* 垂直方向の中央揃え */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-button, .rank-button {
+    font-family: 'DotGothic16', sans-serif;
+    letter-spacing: 5px;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+    background-color: #000000;
+    border: none;
+    border-radius: 10px;
+    width: 230px;
+    height: 70px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    /* 中央揃えのためのプロパティを追加 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-button:hover, .rank-button:hover {
+    background-color: #808080;
+}
