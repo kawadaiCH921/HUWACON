@@ -29,6 +29,10 @@
     { "x": 650, "y": 600, "scale": 1.8, "image": "block" },
     { "x": 680, "y": 600, "scale": 1.8, "image": "block" },
     { "x": 710, "y": 600, "scale": 1.8, "image": "block" },
+
+    { "x": 600, "y": 850, "scale": 1.8, "image": "block" },
+    { "x": 650, "y": 850, "scale": 1.8, "image": "block" },
+    { "x": 700, "y": 850, "scale": 1.8, "image": "block" },
     
     { "x": 520, "y": 480, "scale": 1.8, "image": "block" },
     { "x": 450, "y": 370, "scale": 1.8, "image": "block" },
@@ -38,11 +42,11 @@
 
   "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
   "enemies": [
-    { "x": 1750, "y": 100, "scale": 4.2, "speedX": -100, "image": "enemy", "type": "normal", "fallable": false },
-    { "x": 10, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false },
-    { "x": 550, "y": 750, "scale": 1.5, "speedX": -100, "image": "enemy", "type": "jump", "jumpHeight": -200, "jumpInterval": 100, "fallable": false },
-    { "x": 620, "y": 550, "scale": 1.5, "speedX": 50, "image": "enemy", "type": "jump", "jumpHeight": -500, "jumpInterval": 2500, "fallable": false },
-    { "x": 850, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false }
+    { "x": 1750, "y": 100, "scale": 2.2, "speedX": -300, "image": "enemy", "type": "normal", "fallable": false, "blockCollision": false },
+    { "x": 10, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false, "blockCollision": true },
+    { "x": 550, "y": 750, "scale": 1.5, "speedX": -100, "image": "enemy", "type": "jump", "jumpHeight": -200, "jumpInterval": 100, "fallable": false, "blockCollision": true },
+    { "x": 620, "y": 550, "scale": 1.5, "speedX": 50, "image": "enemy", "type": "jump", "jumpHeight": -500, "jumpInterval": 2500, "fallable": false, "blockCollision": false },
+    { "x": 850, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false, "blockCollision": false }
   ],
 
   "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
@@ -65,7 +69,7 @@
   "_comment": "死亡判定情報「X・Y(横・縦)、判定の幅(横,縦)」",
   "holes": [
     { "x": 1000, "y": 1000, "width": 2000, "height": 50 },
-    { "x": 300, "y": 860, "width": 30, "height": 30}
+    { "x": 300, "y": 860, "width": 30, "height": 30 }
   ],
 
   "_comment": "ゴール情報「X・Y(横・縦)、サイズ(横・縦)、ゴール画像」",
