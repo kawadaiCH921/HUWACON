@@ -42,7 +42,7 @@
 
   "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
   "enemies": [
-    { "x": 1750, "y": 100, "scale": 4.2, "speedX": -100, "image": "enemy", "type": "normal", "fallable": false, "blockCollision": false },
+    { "x": 1750, "y": 100, "scale": 2.2, "speedX": -300, "image": "enemy", "type": "normal", "fallable": false, "blockCollision": false },
     { "x": 10, "y": 750, "scale": 5, "speedX": -100, "image": "enemy", "type": "shoot", "shootInterval": 500, "bulletSpeed": 200, "bulletImage": "5405", "fallable": false, "blockCollision": true },
     { "x": 550, "y": 750, "scale": 1.5, "speedX": -100, "image": "enemy", "type": "jump", "jumpHeight": -200, "jumpInterval": 100, "fallable": false, "blockCollision": true },
     { "x": 620, "y": 550, "scale": 1.5, "speedX": 50, "image": "enemy", "type": "jump", "jumpHeight": -500, "jumpInterval": 2500, "fallable": false, "blockCollision": false },
