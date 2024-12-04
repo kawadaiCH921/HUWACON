@@ -15,7 +15,7 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     // JSONファイルの読み込み
-    this.load.json('stageData', 'json/1-4.json');
+    this.load.json('stageData', 'json/1-3.json');
 
     // JSONデータを取得し、アセットを自動的にロード
     this.load.on('filecomplete-json-stageData', () => {
@@ -39,30 +39,30 @@ class MainScene extends Phaser.Scene {
     const assetList = new Set();
 
     // 背景、プレイヤー、敵、ブロック、ゴールの画像を収集
-    assetList.add({ key: stageData.stage.background.image, path: `img/1-4/${stageData.stage.background.image}.jpg` }); // 変更要
+    assetList.add({ key: stageData.stage.background.image, path: `img/1-3/${stageData.stage.background.image}.jpg` }); // 変更要
     assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` }); 
 
     stageData.blocks.forEach(block => {
-      assetList.add({ key: block.image, path: `img/1-4/${block.image}.png` }); // 変更要
+      assetList.add({ key: block.image, path: `img/1-3/${block.image}.png` }); // 変更要
     });
 
     stageData.enemies.forEach(enemy => {
-      assetList.add({ key: enemy.image, path: `img/1-4/${enemy.image}.png` }); // 変更要
+      assetList.add({ key: enemy.image, path: `img/1-3/${enemy.image}.png` }); // 変更要
       // 弾丸画像を追加
       if (enemy.bulletImage) {
-        assetList.add({ key: enemy.bulletImage, path: `img/1-4/${enemy.bulletImage}.png` });
+        assetList.add({ key: enemy.bulletImage, path: `img/1-3/${enemy.bulletImage}.png` });
       }
     });
 
     stageData.ground.forEach(ground => {
-      assetList.add({ key: ground.image, path: `img/1-4/${ground.image}.png` }); // 変更要
+      assetList.add({ key: ground.image, path: `img/1-3/${ground.image}.png` }); // 変更要
     });
 
-    assetList.add({ key: stageData.goal.pole.image, path: `img/1-4/${stageData.goal.pole.image}.png` });
-    assetList.add({ key: stageData.goal.flag.image, path: `img/1-4/${stageData.goal.flag.image}.png` });
+    assetList.add({ key: stageData.goal.pole.image, path: `img/1-3/${stageData.goal.pole.image}.png` });
+    assetList.add({ key: stageData.goal.flag.image, path: `img/1-3/${stageData.goal.flag.image}.png` });
 
     stageData.decorations.forEach(decoration => {
-      assetList.add({ key: decoration.image, path: `img/1-4/${decoration.image}.png` });
+      assetList.add({ key: decoration.image, path: `img/1-3/${decoration.image}.png` });
     });
   
     return Array.from(assetList);

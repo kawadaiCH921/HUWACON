@@ -4,7 +4,7 @@
     "width": 7000,
     "height": 1050,
     "background": { "image": "teraria", "scaleX": 1.0, "scaleY": 1.0 },
-    "bgm": "1-4"
+    "bgm": "1-3"
   },
 
   "_comment": "プレイヤー情報「X・Y(横、縦)、プレイヤーサイズ、プレイヤー画像」",
