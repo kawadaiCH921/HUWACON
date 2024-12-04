@@ -202,6 +202,9 @@ $pdo = new PDO($connect, user, pass);
 
     <?php
     // Retrieve distinct stage IDs from the database
+    $stmt = $pdo->query('SELECT DISTINCT stage_id FROM stage ORDER BY stage_id ASC');
+    $stageid = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
     $stmt = $pdo->query('SELECT DISTINCT stage_id FROM ranking ORDER BY stage_id ASC');
     $stages = $stmt->fetchAll(PDO::FETCH_COLUMN);
     ?>
@@ -210,7 +213,7 @@ $pdo = new PDO($connect, user, pass);
         <div class="tab-buttons">
             <?php
             // Generate a tab button for each stage
-            foreach ($stages as $index => $stage_id) {
+            foreach ($stageid as $index => $stage_id) {
                 $activeClass = $index === 0 ? 'active' : '';
                 echo "<button class='tab-button $activeClass' onclick='showTab($stage_id)'>ステージ $stage_id</button>";
             }

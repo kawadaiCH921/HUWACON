@@ -35,7 +35,8 @@ try {
     foreach ($stmt as $row) {
         echo '<form method="POST" action="2d_Phaser3.php" class="stage-form">';
         echo '<input type="hidden" name="stage_id" value="' . htmlspecialchars($row['stage_id']) . '">';
-        echo '<div class="stage-button" onclick="this.closest(\'form\').submit();">';
+        // echo '<div class="stage-button" onclick="this.closest(\'form\').submit();">';
+        echo '<div class="stage-button" onclick="submitStageForm(this);">';
         // ステージ画像がある場合は表示
         if (!empty($row['stage_img'])) {
             echo '<img src="img/' . htmlspecialchars($row['stage_img']) . '" alt="Stage ' . $row['stage_id'] . '">';
@@ -56,8 +57,14 @@ echo '</div>';
 // バックボタンのJavaScriptのみ残す
 echo '<script>';
 echo 'document.querySelector(".back-button").addEventListener("click", function() {';
-echo '    window.history.back();';
+echo '    window.location.href="MainMenu.php";';
 echo '});';
+echo 'function submitStageForm(element) {';
+echo '    const form = element.closest("form");'; // シングルクォートからダブルクォートへ変更
+echo '    if (form) {';
+echo '        form.submit();';
+echo '    }';
+echo '}';
 echo '</script>';
 
 echo '</body>';
