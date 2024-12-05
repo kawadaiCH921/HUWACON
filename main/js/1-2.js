@@ -258,64 +258,63 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
   
   // 穴に落ちたときの処理
   onFallInHole() {
-    if (this.isGameOver) return; // すでにゲームオーバーなら処理をスキップ
-    this.isGameOver = true; // ゲームオーバーフラグを設定
-    this.input.keyboard.enabled = false; // キーボード入力を無効化
+    if (this.isGameOver || this.isGameClear) return; // すでに終了している場合はスキップ
+    this.isGameOver = true;
 
-    this.player.setTint(0xff0000);  // プレイヤーを赤くするエフェクト
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.input.keyboard.enabled = false;
+    this.player.setTint(0xff0000);
+    this.player.setVelocity(0);
 
-    const hitSound = this.sound.add('hit', {volume: 1});
+    const hitSound = this.sound.add('hit', { volume: 1 });
     const gameOverSound = this.sound.add('gameOver', { loop: true, volume: 0.1 });
 
-    // ヒット音が終わった後にゲームオーバー音を再生
     hitSound.once('complete', () => {
-      this.bgm.stop();  // BGMを停止
-      gameOverSound.play();
-      this.scene.start('OverScene');  // ゲームオーバー画面に移行 
+        this.bgm.stop();
+        gameOverSound.play();
+        this.scene.start('OverScene');
     });
 
-    hitSound.play();  // ヒット音の再生開始
+    hitSound.play();
   }
 
   // プレイヤーが敵にヒットしたときの処理
   onPlayerHit() {
-    if (this.isGameOver) return; // すでにゲームオーバーなら処理をスキップ
-    this.isGameOver = true; // ゲームオーバーフラグを設定
-    this.input.keyboard.enabled = false; // キーボード入力を無効化
+    if (this.isGameOver || this.isGameClear) return; // すでに終了している場合はスキップ
+    this.isGameOver = true;
 
-    this.player.setTint(0xff0000);  // プレイヤーを赤くするエフェクト
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.input.keyboard.enabled = false;
+    this.player.setTint(0xff0000);
+    this.player.setVelocity(0);
 
-    const hitSound = this.sound.add('hit', {volume: 1.5});
+    const hitSound = this.sound.add('hit', { volume: 1.5 });
     const gameOverSound = this.sound.add('gameOver', { loop: true, volume: 0.1 });
 
-    // ヒット音が終わった後にゲームオーバー音を再生
     hitSound.once('complete', () => {
-      this.bgm.stop();  // BGMを停止
-      gameOverSound.play();
-      this.scene.start('OverScene');  // ゲームオーバー画面に移行 
+        this.bgm.stop();
+        gameOverSound.play();
+        this.scene.start('OverScene');
     });
 
-    hitSound.play();  // ヒット音の再生開始
+    hitSound.play();
   }
 
   //プレイヤーがゴールした時の処理
   onGoalReached() {
-    if (this.isGameClear) return; // すでにゲームクリアなら処理をスキップ
+    if (this.isGameClear || this.isGameOver) return; // 重複防止
     this.isGameClear = true; // ゲームクリアフラグを設定
 
     this.input.keyboard.enabled = false; // キーボード入力を無効化
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.player.setVelocity(0); // プレイヤーを停止
 
     const gameClearSound = this.sound.add('gameClear', { loop: false, volume: 0.1 });
-  
-    // ゲームクリア音が終わったらClearSceneに移行
+
+    // ゲームクリア音が終わったらclear.phpに遷移
     gameClearSound.once('complete', () => {
-      const finalTime = (this.time.now - this.startTime) / 1000;
-      this.scene.start('ClearScene', { time: finalTime });
+        const finalTime = (this.time.now - this.startTime) / 1000;
+        const url = `clear.php?time=${encodeURIComponent(finalTime.toFixed(3))}`;
+        window.location.href = url; // clear.phpに遷移
     });
-  
+
     gameClearSound.play();
   }
 
@@ -435,38 +434,38 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 }
 
 // クリア画面のシーン
-class ClearScene extends Phaser.Scene {
-  constructor() {
-    super('ClearScene');
-  }
+// class ClearScene extends Phaser.Scene {
+//   constructor() {
+//     super('ClearScene');
+//   }
 
-  create(data) {
-  const time = data.time || 0; // 渡された経過時間（秒）を取得
-  const hours = Math.floor(time / 3600); // 時間
-  const minutes = Math.floor((time % 3600) / 60); // 分
-  const seconds = Math.floor(time % 60); // 秒
+//   create(data) {
+//   const time = data.time || 0; // 渡された経過時間（秒）を取得
+//   const hours = Math.floor(time / 3600); // 時間
+//   const minutes = Math.floor((time % 3600) / 60); // 分
+//   const seconds = Math.floor(time % 60); // 秒
 
-  // 経過時間の表示
-  this.add.text(config.width / 2 , (config.height / 2) - 50, 
-    `Game Clear!`, 
-    { fontSize: '48px', fill: '#fff' }
-  ).setOrigin(0.5); // 中央に配置;
+//   // 経過時間の表示
+//   this.add.text(config.width / 2 , (config.height / 2) - 50, 
+//     `Game Clear!`, 
+//     { fontSize: '48px', fill: '#fff' }
+//   ).setOrigin(0.5); // 中央に配置;
 
-  this.add.text(config.width / 2, (config.height / 2) + 50,
-    `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
-    { fontSize: '48px', fill: '#fff' }
-  ).setOrigin(0.5); // 中央に配置;
+//   this.add.text(config.width / 2, (config.height / 2) + 50,
+//     `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
+//     { fontSize: '48px', fill: '#fff' }
+//   ).setOrigin(0.5); // 中央に配置;
 
-  // クリックまたはスペースキーで再スタート
-  this.input.once('pointerdown', () => {
-      this.scene.start('MainScene');
-    });
-    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    this.spaceKey.on('down', () => {
-      this.scene.start('MainScene');
-    });
-  }
-}
+//   // クリックまたはスペースキーで再スタート
+//   this.input.once('pointerdown', () => {
+//       this.scene.start('MainScene');
+//     });
+//     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+//     this.spaceKey.on('down', () => {
+//       this.scene.start('MainScene');
+//     });
+//   }
+// }
 
 class OverScene extends Phaser.Scene {
   constructor() {
@@ -513,7 +512,7 @@ const config = {
     mode: Phaser.Scale.FIT,      // 画面にフィットさせる
     autoCenter: Phaser.Scale.CENTER_BOTH, // 中央に表示する
   },
-  scene: [MainScene, ClearScene, OverScene], // シーンを登録
+  scene: [MainScene, OverScene], // シーンを登録
 };
 
 // ゲームのインスタンスを作成して起動
