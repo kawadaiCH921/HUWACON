@@ -499,7 +499,7 @@ const config = {
     default: 'arcade', // Arcade 物理エンジンを使用
     arcade: {
       gravity: { y: 1000 }, // 重力の設定
-      debug: true,
+      debug: false,
       tileBias: 64, // 衝突検出のバイアス (タイルの大きさを基準に設定)
       checkCollision: {
         up: true,

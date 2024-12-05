@@ -1,1 +1,124 @@
+{
+    "_comment": "ステージ情報「ステージサイズ(横・縦)、背景画像、BGM」",
+    "stage": {
+      "width": 20000,
+      "height": 1050,
+      "background": { "image": "space-back", "scaleX": 1, "scaleY": 1 },
+      "bgm": "space"
+    },
+  
+    "_comment": "プレイヤー情報「X・Y(横、縦)、プレイヤーサイズ、プレイヤー画像」",
+    "player": {
+      "x": 100,
+      "y": 400,
+      "scale": 1.5,
+      "image": "player"
+    },  
+  
+    "_comment": "ブロック情報「X・Y(横・縦)、大きさ、ブロック画像」",
+    "blocks": [
+      { "x": 100, "y": 800, "scale": 0.3, "image": "planet1" },
 
+      { "x": 500, "y": 750, "scale": 0.09, "image": "ufo" },
+      { "x": 800, "y": 600, "scale": 0.09, "image": "ufo" },
+      { "x": 1150, "y": 700, "scale": 0.09, "image": "ufo" },
+      { "x": 1400, "y": 650, "scale": 0.09, "image": "ufo" },
+      { "x": 1750, "y": 800, "scale": 0.09, "image": "ufo" },
+      { "x": 2000, "y": 620, "scale": 0.09, "image": "ufo" },
+      { "x": 1900, "y": 450, "scale": 0.09, "image": "ufo" },
+      { "x": 2300, "y": 450, "scale": 0.09, "image": "ufo" },
+
+      { "x": 2750, "y": 550, "scale": 0.3, "image": "planet2" },
+
+      { "x": 3150, "y": 600, "scale": 0.09, "image": "ufo" },
+      { "x": 3500, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 3750, "y": 330, "scale": 0.09, "image": "ufo" },
+
+
+      { "x": 4600, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 5000, "y": 450, "scale": 0.09, "image": "ufo" },
+      { "x": 5350, "y": 550, "scale": 0.09, "image": "ufo" },
+      { "x": 5500, "y": 425, "scale": 0.09, "image": "ufo" },
+
+
+      { "x": 6350, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 6700, "y": 600, "scale": 0.09, "image": "ufo" },
+      { "x": 7000, "y": 450, "scale": 0.09, "image": "ufo" },
+      { "x": 7200, "y": 300, "scale": 0.09, "image": "ufo" },
+
+      { "x": 7600, "y": 600, "scale": 0.2, "image": "planet5" },
+
+      { "x": 7950, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 8300, "y": 400, "scale": 0.09, "image": "ufo" },
+      { "x": 8750, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 9100, "y": 400, "scale": 0.09, "image": "ufo" },
+
+      { "x": 9450, "y": 500, "scale": 0.2, "image": "planet6" },
+
+      { "x": 9800, "y": 650, "scale": 0.09, "image": "ufo" },
+      { "x": 10000, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 10300, "y": 400, "scale": 0.09, "image": "ufo" },
+      { "x": 10700, "y": 550, "scale": 0.09, "image": "ufo" },
+
+      { "x": 11000, "y": 500, "scale": 0.19, "image": "planet7" },
+
+      { "x": 11200, "y": 350, "scale": 0.09, "image": "ufo" },
+      { "x": 11600, "y": 450, "scale": 0.09, "image": "ufo" },
+      { "x": 12000, "y": 400, "scale": 0.09, "image": "ufo" },
+      { "x": 12300, "y": 550, "scale": 0.09, "image": "ufo" },
+
+      { "x": 12600, "y": 500, "scale": 0.17, "image": "planet8" },
+
+      { "x": 12800, "y": 350, "scale": 0.09, "image": "ufo" },
+      { "x": 13200, "y": 450, "scale": 0.09, "image": "ufo" },
+      { "x": 13400, "y": 600, "scale": 0.09, "image": "ufo" },
+      { "x": 13700, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 13900, "y": 650, "scale": 0.09, "image": "ufo" },
+      { "x": 14200, "y": 550, "scale": 0.09, "image": "ufo" },
+      { "x": 14450, "y": 400, "scale": 0.09, "image": "ufo" },
+
+
+      { "x": 15400, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 15600, "y": 400, "scale": 0.09, "image": "ufo" },
+      { "x": 16000, "y": 500, "scale": 0.09, "image": "ufo" },
+      { "x": 16400, "y": 550, "scale": 0.09, "image": "ufo" }
+    ],
+  
+    "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
+    "enemies": [
+      { "x": 4150, "y": 300, "scale": 0.09, "speedX": -150, "image": "enemy1", "type": "normal", "fallable": false },
+      { "x": 6150, "y": 500, "scale": 0.09, "speedX": 0, "image": "enemy2", "type": "shoot", "shootInterval": 1500, "bulletSpeed": 400, "bulletImage": "bullet", "fallable": false, "blockCollision": false },
+      { "x": 8520, "y": 300, "scale": 0.09, "speedX": 0, "image": "enemy2", "type": "shoot", "shootInterval": 3000, "bulletSpeed": 200, "bulletImage": "bullet", "fallable": false, "blockCollision": false },
+      { "x": 11220, "y": 420 , "scale": 0.09, "speedX": 0, "image": "enemy2", "type": "shoot", "shootInterval": 3000, "bulletSpeed": 200, "bulletImage": "bullet", "fallable": false, "blockCollision": false },
+      { "x": 13570, "y": 560 , "scale": 0.09, "speedX": 0, "image": "enemy2", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 400, "bulletImage": "bullet", "fallable": false, "blockCollision": false },
+      { "x": 14800, "y": 450, "scale": 0.09, "speedX": -300, "image": "enemy2", "type": "shoot", "shootInterval": 2000, "bulletSpeed": 300, "bulletImage": "bullet", "fallable": false, "blockCollision": false }
+    ],
+  
+    "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
+    "ground": [
+      { "x": 4000, "y": 450, "width": 300, "height": 150, "image": "planet3" },
+      { "x": 5750, "y": 750, "width": 400, "height": 400, "image": "planet4" },
+      { "x": 8500, "y": 350, "width": 45, "height": 35, "image": "ufo" },
+      { "x": 11200, "y": 470, "width": 45, "height": 35, "image": "ufo" },
+      { "x": 13550, "y": 610, "width": 45, "height": 35, "image": "ufo" },
+      { "x": 14570, "y":820, "width": 700, "height": 700, "image": "planet9" }
+    ],
+  
+    "_comment": "死亡判定情報「X・Y(横・縦)、判定の幅(横,縦)」",
+    "holes": [
+      { "x": 1000, "y": 1000, "width": 30000, "height": 50 },
+      { "x": 300, "y": 860, "width": 30, "height": 30}
+    ],
+  
+    "_comment": "ゴール情報「X・Y(横・縦)、サイズ(横・縦)、ゴール画像」",
+    "goal": {
+      "pole": { "x": 0, "y": 0, "width": 1, "height": 1, "image": "pole" },
+      "flag": { "x": 16800, "y": 800, "width": 500, "height": 500, "image": "blackhole" }
+    },
+  
+    "_comment": "オブジェクト情報「X・Y(横・縦)、画像サイズ(横・縦)、画像」",
+    "decorations": [
+      { "x": 0, "y": 0, "width": 0, "height": 0, "image": "ufo" }
+    ]
+  }
+  
