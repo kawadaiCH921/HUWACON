@@ -343,7 +343,7 @@ class MainScene extends Phaser.Scene {
         if (!enemy.active || !enemy.body) return;
     
         // プレイヤーと敵の距離を確認
-        const isNearPlayer = playerX - 550 <= enemyX && enemyX <= playerX + 675;
+        const isNearPlayer = playerX - 675 <= enemyX && enemyX <= playerX + 675;
   
         // 範囲内の場合、通常の処理を実行
         enemy.body.setCollideWorldBounds(true); // ワールド内に閉じ込める
