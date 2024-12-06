@@ -310,7 +310,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
     // ゲームクリア音が終わったらclear.phpに遷移
     gameClearSound.once('complete', () => {
         const finalTime = (this.time.now - this.startTime) / 1000;
-        const url = `clear.php?time=${encodeURIComponent(finalTime.toFixed(3))}`;
+        const url = `clear.php?stage_id=1&time=${encodeURIComponent(finalTime.toFixed(3))}`;
         window.location.href = url; // clear.phpに遷移
     });
 
@@ -458,9 +458,8 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 //       { fontSize: '48px', fill: '#fff' }
 //     ).setOrigin(0.5);
   
-//     // URLパラメータにクリアタイムを含めて遷移
-//     const clearTimeParam = encodeURIComponent(time); // クリアタイムをエンコード
-//     window.location.href = `./clear.php?time=${clearTimeParam}`; // GETパラメータとして送信
+//     const stageId = 1; // ステージIDを適切に設定
+//     window.location.href = `./clear.php?stage_id=${stageId}&time=${time}`;    
 //   }  
 // }
 

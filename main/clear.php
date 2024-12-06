@@ -17,15 +17,30 @@ error_log("DEBUG: _POST data: " . print_r($_POST, true));
 
 // DB接続ファイルを読み込む
 require 'db-connect.php';
+$pdo = new PDO($connect, user, pass);
 
 try {
-    $pdo = new PDO($connect, user, pass);
+// ステージIDの取得（POST、GET、デフォルトの順で取得）
+$stage_id = isset($_POST['stage_id']) ? intval($_POST['stage_id']) : (isset($_GET['stage_id']) ? intval($_GET['stage_id']) : null);
 
-    // ステージ情報を取得
-    $stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = 1");
-    $stmt->execute();
-    $stage = $stmt->fetch(PDO::FETCH_ASSOC);
-    $stage_id = $stage['stage_id'];
+// ステージIDが指定されていない場合のエラーハンドリング
+if ($stage_id === null) {
+    echo "エラー: stage_idが指定されていません。";
+    exit;
+}
+
+// ステージ情報を取得
+
+$stmt = $pdo->prepare("SELECT * FROM stage WHERE stage_id = :stage_id");
+$stmt->bindParam(':stage_id', $stage_id, PDO::PARAM_INT);
+$stmt->execute();
+
+$stage = $stmt->fetch(PDO::FETCH_ASSOC); // ステージ情報を取得
+if (!$stage) {
+    echo "エラー: 指定されたstage_idは存在しません。";
+    exit;
+}
+
 } catch (PDOException $e) {
     echo "エラー: " . htmlspecialchars($e->getMessage());
     exit;

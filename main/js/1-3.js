@@ -310,7 +310,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
     // ゲームクリア音が終わったらclear.phpに遷移
     gameClearSound.once('complete', () => {
         const finalTime = (this.time.now - this.startTime) / 1000;
-        const url = `clear.php?time=${encodeURIComponent(finalTime.toFixed(3))}`;
+        const url = `clear.php?stage_id=3&time=${encodeURIComponent(finalTime.toFixed(3))}`;
         window.location.href = url; // clear.phpに遷移
     });
 
