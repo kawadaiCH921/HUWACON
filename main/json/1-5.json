@@ -1,16 +1,16 @@
 {
   "_comment": "ステージ情報「ステージサイズ(横・縦)、背景画像、BGM」",
   "stage": {
-    "width": 6000,
+    "width": 8000,
     "height": 1050,
     "background": { "image": "black1", "scaleX": 0, "scaleY": 0, "size": 30 },
-    "bgm": "bgm01"
+    "bgm": "house"
   },
 
   "_comment": "プレイヤー情報「X・Y(横、縦)、プレイヤーサイズ、プレイヤー画像」",
   "player": { 
-    "x": 5800,
-    "y": 100,
+    "x": 6700,
+    "y": 500,
     "scale": 1.5,
     "image": "player"
   },  
@@ -21,8 +21,8 @@
     { "x": 180, "y": 780, "scale": 1.3, "image": "black4" },
 
     { "x": 820, "y": 720, "scale": 1.8, "image": "black4" },
-    { "x": 710, "y": 605, "scale": 1.8, "image": "black4" },
-    { "x": 920, "y": 550, "scale": 1.8, "image": "black4" },
+    { "x": 700, "y": 605, "scale": 1.8, "image": "black4" },
+    { "x": 900, "y": 550, "scale": 1.8, "image": "black4" },
     
     { "x": 1700, "y": 430, "scale": 1.8, "image": "black5-tate" },
     { "x": 1700, "y": 480, "scale": 1.8, "image": "black5-tate" },
@@ -185,8 +185,18 @@
 
 
     { "x": 2000, "y": 900, "scale": 1, "image": "black5" },
-    { "x": 2000, "y": 740, "scale": 1, "image": "black5" }
+    { "x": 2000, "y": 740, "scale": 1, "image": "black5" },
 
+
+
+    { "x": 6560, "y": 870, "scale": 0.1, "image": "snow" },
+    { "x": 6250, "y": 560, "scale": 0.1, "image": "snow" },
+    { "x": 6350, "y": 740, "scale": 0.1, "image": "snow" },
+
+    { "x": 6700, "y": 760, "scale": 0.1, "image": "snow" },
+    { "x": 6820, "y": 640, "scale": 0.1, "image": "snow" },
+
+    { "x": 6945, "y": 560, "scale": 0.5, "image": "r" }
 ],
 
   "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
@@ -213,9 +223,9 @@
  
     { "x": 90, "y": 950, "width": 17, "height": 100, "image": "block2" },
   
-    { "x": 340, "y": 950, "width": 10, "height": 60, "image": "block2" },
-    { "x": 550, "y": 950, "width": 10, "height": 150, "image": "block2" },
-    { "x": 760, "y": 950, "width": 10, "height": 240, "image": "block2" },
+    { "x": 345, "y": 950, "width": 10, "height": 60, "image": "block2" },
+    { "x": 545, "y": 950, "width": 10, "height": 150, "image": "block2" },
+    { "x": 750, "y": 950, "width": 10, "height": 240, "image": "block2" },
 
     { "x": 1050, "y": 550, "width": 400, "height": 9, "image": "black5" },
 
@@ -239,7 +249,8 @@
     { "x": 5590, "y": 930, "width": 40, "height": 200, "image": "tree" },
     { "x": 5610, "y": 930, "width": 40, "height": 200, "image": "tree" },
 
-    { "x": 5750, "y": 600, "scale": 9.0,"width": 400, "height": 9, "image": "black1" }
+
+    { "x": 5750, "y": 600, "scale": 9.0,"width": 400, "height": 9, "image": "b3" }
 
   ],
 
@@ -250,12 +261,15 @@
 
   "_comment": "ゴール情報「X・Y(横・縦)、サイズ(横・縦)、ゴール画像」",
   "goal": {
-    "pole": { "x": 9900, "y": 813, "width": 42, "height": 150, "image": "pole" },
-    "flag": { "x": 9900, "y": 713, "width": 42, "height": 48, "image": "flag" }
+    "pole": { "x": 6950, "y": 500, "width": 20, "height": 100, "image": "pole" },
+    "flag": { "x": 6950, "y": 460, "width": 20, "height": 12, "image": "flag" }
   },
 
   "_comment": "オブジェクト情報「X・Y(横・縦)、画像サイズ(横・縦)、画像」",
   "decorations": [
-    { "x": 300, "y": 858, "width": 35, "height": 35, "image": "kareki" }
+    { "x": 0, "y": 0, "width": 35, "height": 35, "image": "kareki" },
+
+    { "x": 6950, "y": 700, "width": 20, "height": 100, "image": "pole" },
+    { "x": 6950, "y": 660, "width": 20, "height": 12, "image": "flag" }
   ]
 }

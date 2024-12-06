@@ -14,7 +14,7 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     // JSONファイルの読み込み
-    this.load.json('stageData', 'json/1-3.json');
+    this.load.json('stageData', 'json/1-5.json');
 
     // JSONデータを取得し、アセットを自動的にロード
     this.load.on('filecomplete-json-stageData', () => {
@@ -38,30 +38,30 @@ class MainScene extends Phaser.Scene {
     const assetList = new Set();
 
     // 背景、プレイヤー、敵、ブロック、ゴールの画像を収集
-    assetList.add({ key: stageData.stage.background.image, path: `img/1-3/${stageData.stage.background.image}.png` }); // 変更要
+    assetList.add({ key: stageData.stage.background.image, path: `img/1-5/${stageData.stage.background.image}.png` }); // 変更要
     assetList.add({ key: stageData.player.image, path: `img/player/${stageData.player.image}.png` }); 
 
     stageData.blocks.forEach(block => {
-      assetList.add({ key: block.image, path: `img/1-3/${block.image}.png` }); // 変更要
+      assetList.add({ key: block.image, path: `img/1-5/${block.image}.png` }); // 変更要
     });
 
     stageData.enemies.forEach(enemy => {
-      assetList.add({ key: enemy.image, path: `img/1-3/${enemy.image}.png` }); // 変更要
+      assetList.add({ key: enemy.image, path: `img/1-5/${enemy.image}.png` }); // 変更要
       // 弾丸画像を追加
       if (enemy.bulletImage) {
-        assetList.add({ key: enemy.bulletImage, path: `img/1-3/${enemy.bulletImage}.png` });
+        assetList.add({ key: enemy.bulletImage, path: `img/1-5/${enemy.bulletImage}.png` });
       }
     });
 
     stageData.ground.forEach(ground => {
-      assetList.add({ key: ground.image, path: `img/1-3/${ground.image}.png` }); // 変更要
+      assetList.add({ key: ground.image, path: `img/1-5/${ground.image}.png` }); // 変更要
     });
 
     assetList.add({ key: stageData.goal.pole.image, path: `img/goals/${stageData.goal.pole.image}.png` });
     assetList.add({ key: stageData.goal.flag.image, path: `img/goals/${stageData.goal.flag.image}.png` });
 
     stageData.decorations.forEach(decoration => {
-      assetList.add({ key: decoration.image, path: `img/1-3/${decoration.image}.png` });
+      assetList.add({ key: decoration.image, path: `img/1-5/${decoration.image}.png` });
     });
 
     return Array.from(assetList);
@@ -90,7 +90,7 @@ class MainScene extends Phaser.Scene {
     .setScale(bgScaleX, bgScaleY);  // 個別のスケールを設定
 
     // === BGMの再生 ===
-    this.bgm = this.sound.add(stage.bgm, { loop: true, volume: 0.1 });
+    this.bgm = this.sound.add(stage.bgm, { loop: true, volume: 0.2 });
     this.bgm.play();
 
     // カメラとワールドの設定
@@ -498,7 +498,7 @@ const config = {
     default: 'arcade', // Arcade 物理エンジンを使用
     arcade: {
       gravity: { y: 1000 }, // 重力の設定
-      debug: true,
+      debug: false,
       tileBias: 64, // 衝突検出のバイアス (タイルの大きさを基準に設定)
       checkCollision: {
         up: true,
