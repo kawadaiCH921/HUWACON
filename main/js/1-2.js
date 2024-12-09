@@ -311,7 +311,7 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
     // ゲームクリア音が終わったらclear.phpに遷移
     gameClearSound.once('complete', () => {
         const finalTime = (this.time.now - this.startTime) / 1000;
-        const url = `clear.php?time=${encodeURIComponent(finalTime.toFixed(3))}`;
+        const url = `clear.php?stage_id=2&time=${encodeURIComponent(finalTime.toFixed(3))}`;
         window.location.href = url; // clear.phpに遷移
     });
 
@@ -440,31 +440,25 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 //   }
 
 //   create(data) {
-//   const time = data.time || 0; // 渡された経過時間（秒）を取得
-//   const hours = Math.floor(time / 3600); // 時間
-//   const minutes = Math.floor((time % 3600) / 60); // 分
-//   const seconds = Math.floor(time % 60); // 秒
-
-//   // 経過時間の表示
-//   this.add.text(config.width / 2 , (config.height / 2) - 50, 
-//     `Game Clear!`, 
-//     { fontSize: '48px', fill: '#fff' }
-//   ).setOrigin(0.5); // 中央に配置;
-
-//   this.add.text(config.width / 2, (config.height / 2) + 50,
-//     `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
-//     { fontSize: '48px', fill: '#fff' }
-//   ).setOrigin(0.5); // 中央に配置;
-
-//   // クリックまたはスペースキーで再スタート
-//   this.input.once('pointerdown', () => {
-//       this.scene.start('MainScene');
-//     });
-//     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-//     this.spaceKey.on('down', () => {
-//       this.scene.start('MainScene');
-//     });
-//   }
+//     const time = data.time || 0; // 渡された経過時間（秒）を取得
+//     const hours = Math.floor(time / 3600); // 時間
+//     const minutes = Math.floor((time % 3600) / 60); // 分
+//     const seconds = Math.floor(time % 60); // 秒
+  
+//     // 経過時間の表示
+//     this.add.text(config.width / 2 , (config.height / 2) - 50, 
+//       `Game Clear!`, 
+//       { fontSize: '48px', fill: '#fff' }
+//     ).setOrigin(0.5);
+  
+//     this.add.text(config.width / 2, (config.height / 2) + 50,
+//       `Time: ${hours} 時間 ${minutes} 分 ${seconds} 秒`, 
+//       { fontSize: '48px', fill: '#fff' }
+//     ).setOrigin(0.5);
+  
+//     const stageId = 1; // ステージIDを適切に設定
+//     window.location.href = `./clear.php?stage_id=${stageId}&time=${time}`;    
+//   }  
 // }
 
 class OverScene extends Phaser.Scene {
