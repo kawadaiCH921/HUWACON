@@ -1,1 +1,276 @@
+{
+  "_comment": "ステージ情報「ステージサイズ(横・縦)、背景画像、BGM」",
+  "stage": {
+    "width": 8000,
+    "height": 1050,
+    "background": { "image": "black1", "scaleX": 0, "scaleY": 0, "size": 30 },
+    "bgm": "house"
+  },
+
+  "_comment": "プレイヤー情報「X・Y(横、縦)、プレイヤーサイズ、プレイヤー画像」",
+  "player": { 
+    "x": 100,
+    "y": 500,
+    "scale": 1.5,
+    "image": "player"
+  },  
+
+  "_comment": "ブロック情報「X・Y(横・縦)、大きさ、ブロック画像」",
+  "blocks": [
+
+    { "x": 180, "y": 780, "scale": 1.3, "image": "black4" },
+
+    { "x": 820, "y": 720, "scale": 1.8, "image": "black4" },
+    { "x": 700, "y": 605, "scale": 1.8, "image": "black4" },
+    { "x": 900, "y": 550, "scale": 1.8, "image": "black4" },
+    
+    { "x": 1700, "y": 430, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 480, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 530, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 580, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 630, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 680, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 730, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 830, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 880, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1700, "y": 930, "scale": 1.8, "image": "black5-tate" },
+
+    { "x": 1680, "y": 850, "scale": 0.4, "image": "black5" }, 
+    
+
+    { "x": 1900, "y": 680, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1900, "y": 730, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1900, "y": 780, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1900, "y": 830, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1900, "y": 880, "scale": 1.8, "image": "black5-tate" },
+    { "x": 1900, "y": 930, "scale": 1.8, "image": "black5-tate" },
+
+    { "x": 1888, "y": 870, "scale": 0.9, "image": "black5" },
+    { "x": 1715, "y": 760, "scale": 0.8, "image": "black5" },
+    { "x": 1888, "y": 680, "scale": 0.9, "image": "black5" },
+    { "x": 1715, "y": 590, "scale": 1.0, "image": "black5" },
+
+    { "x": 1905, "y": 530, "scale": 0.7, "image": "b10" },
+    { "x": 1905, "y": 555, "scale": 0.7, "image": "b11" },
+
+    { "x": 2115, "y": 530, "scale": 0.7, "image": "b10" },
+    { "x": 2115, "y": 555, "scale": 0.7, "image": "b11" },
+    
+    { "x": 2315, "y": 530, "scale": 0.7, "image": "b10" },
+    { "x": 2315, "y": 555, "scale": 0.7, "image": "b11" },
+
+    { "x": 2340, "y": 480, "scale": 0.7, "image": "b10" },
+    { "x": 2340, "y": 505, "scale": 0.7, "image": "b11" },
+    { "x": 2365, "y": 430, "scale": 0.7, "image": "b10" },
+    { "x": 2365, "y": 455, "scale": 0.7, "image": "b11" },
+    { "x": 2390, "y": 380, "scale": 0.7, "image": "b10" },
+    { "x": 2390, "y": 405, "scale": 0.7, "image": "b11" },
+    { "x": 2415, "y": 330, "scale": 0.7, "image": "b10" },
+    { "x": 2415, "y": 355, "scale": 0.7, "image": "b11" },
+    { "x": 2440, "y": 280, "scale": 0.7, "image": "b10" },
+    { "x": 2440, "y": 305, "scale": 0.7, "image": "b11" },
+    { "x": 2465, "y": 230, "scale": 0.7, "image": "b10" },
+    { "x": 2465, "y": 255, "scale": 0.7, "image": "b11" },
+
+    { "x": 2540, "y": 430, "scale": 0.7, "image": "b10" },
+    { "x": 2540, "y": 455, "scale": 0.7, "image": "b11" },
+    { "x": 2565, "y": 380, "scale": 0.7, "image": "b10" },
+    { "x": 2565, "y": 405, "scale": 0.7, "image": "b11" },
+    { "x": 2590, "y": 330, "scale": 0.7, "image": "b10" },
+    { "x": 2590, "y": 355, "scale": 0.7, "image": "b11" },
+    { "x": 2615, "y": 280, "scale": 0.7, "image": "b10" },
+    { "x": 2615, "y": 305, "scale": 0.7, "image": "b11" },
+    { "x": 2640, "y": 230, "scale": 0.7, "image": "b10" },
+    { "x": 2640, "y": 255, "scale": 0.7, "image": "b11" },
+    { "x": 2665, "y": 180, "scale": 0.7, "image": "b10" },
+    { "x": 2665, "y": 205, "scale": 0.7, "image": "b11" },
+    { "x": 2665, "y": 130, "scale": 0.7, "image": "b10" },
+    { "x": 2665, "y": 155, "scale": 0.7, "image": "b11" },
+    { "x": 2665, "y": 80, "scale": 0.7, "image": "b10" },
+    { "x": 2665, "y": 105, "scale": 0.7, "image": "b11" },
+
+    { "x": 2565, "y": 585, "scale": 0.7, "image": "b10" },
+    { "x": 2590, "y": 585, "scale": 0.7, "image": "b10" },
+
+    { "x": 2615, "y": 615, "scale": 0.7, "image": "b10" },
+    { "x": 2640, "y": 615, "scale": 0.7, "image": "b10" },
+    { "x": 2665, "y": 585, "scale": 0.7, "image": "b10" },
+    { "x": 2690, "y": 585, "scale": 0.7, "image": "b10" },
+    
+    { "x": 2915, "y": 615, "scale": 0.7, "image": "b10" },
+    { "x": 2940, "y": 645, "scale": 0.7, "image": "b10" },
+    { "x": 2965, "y": 675, "scale": 0.7, "image": "b10" },
+    { "x": 2990, "y": 705, "scale": 0.7, "image": "b10" },
+    { "x": 3015, "y": 735, "scale": 0.7, "image": "b10" },
+    { "x": 3040, "y": 765, "scale": 0.7, "image": "b10" },
+    { "x": 3065, "y": 795, "scale": 0.7, "image": "b10" },
+    { "x": 3090, "y": 825, "scale": 0.7, "image": "b10" },
+
+    { "x": 3250, "y": 618, "scale": 0.7, "image": "b10" },
+   
+    { "x": 3350, "y": 735, "scale": 0.7, "image": "b10" },
+    { "x": 3200, "y": 825, "scale": 0.7, "image": "b10" },
+    { "x": 3250, "y": 625, "scale": 0.7, "image": "b10" },
+    { "x": 3250, "y": 635, "scale": 0.7, "image": "b10" },
+    { "x": 3250, "y": 645, "scale": 0.7, "image": "b10" },
+    { "x": 3250, "y": 655, "scale": 0.7, "image": "b10" },
+    { "x": 3470, "y": 590, "scale": 0.4, "image": "black5" },
+
+    { "x": 3600, "y": 500, "scale": 0.1, "image": "black5" },
+    { "x": 3600, "y": 720, "scale": 0.08, "image": "t2" },
+
+    { "x": 3680, "y": 690, "scale": 0.5, "image": "cookie" },
+    { "x": 3760, "y": 670, "scale": 0.8, "image": "cookie" },
+    { "x": 3850, "y": 640, "scale": 1.1, "image": "cookie" },
+
+    { "x": 3960, "y": 530, "scale": 0.1, "image": "snow" },
+    { "x": 4140, "y": 560, "scale": 0.1, "image": "snow" },
+    { "x": 4200, "y": 330, "scale": 0.1, "image": "snow" },
+    { "x": 4060, "y": 400, "scale": 0.1, "image": "snow" },
+
+    { "x": 4100, "y": 480, "scale": 0.1, "image": "snow" },
+    { "x": 4140, "y": 560, "scale": 0.1, "image": "snow" },
+    { "x": 4200, "y": 450, "scale": 0.1, "image": "snow" },
+    { "x": 4250, "y": 520, "scale": 0.1, "image": "snow" },
+    { "x": 4320, "y": 600, "scale": 0.1, "image": "snow" },
+    { "x": 4400, "y": 700, "scale": 0.1, "image": "snow" },
+    { "x": 4460, "y": 800, "scale": 0.1, "image": "snow" },
+    { "x": 4520, "y": 670, "scale": 0.1, "image": "snow" },
+    { "x": 4160, "y": 620, "scale": 0.1, "image": "snow" },
+    { "x": 4300, "y": 500, "scale": 0.1, "image": "snow" },
+    { "x": 4420, "y": 570, "scale": 0.1, "image": "snow" },
+    { "x": 4500, "y": 430, "scale": 0.1, "image": "snow" },
+
+    { "x": 3970, "y": 720, "scale": 0.1, "image": "snow" },
+
+    { "x": 4230, "y": 820, "scale": 0.1, "image": "snow" },
+    { "x": 4360, "y": 860, "scale": 0.1, "image": "snow" },
+    { "x": 4450, "y": 760, "scale": 0.1, "image": "snow" },
+    { "x": 4600, "y": 700, "scale": 0.1, "image": "snow" },
+    { "x": 4140, "y": 860, "scale": 0.1, "image": "snow" },
+    { "x": 4100, "y": 760, "scale": 0.1, "image": "snow" },
+    { "x": 4460, "y": 500, "scale": 0.1, "image": "snow" },
+
+    { "x": 4600, "y": 400, "scale": 0.5, "image": "candy" },
+    { "x": 4750, "y": 450, "scale": 0.5, "image": "candy" },
+    { "x": 4900, "y": 400, "scale": 0.5, "image": "candy" },
+    { "x": 5050, "y": 450, "scale": 0.5, "image": "candy" },
+    { "x": 5200, "y": 500, "scale": 0.5, "image": "candy" },
+    { "x": 5200, "y": 700, "scale": 0.5, "image": "candy" },
+    { "x": 5200, "y": 900, "scale": 0.5, "image": "candy" },
+
+    { "x": 5220, "y": 380, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 330, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 480, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 430, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 580, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 530, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 680, "scale": 1.8, "image": "black5-tate" },
+    { "x": 5220, "y": 630, "scale": 1.8, "image": "black5-tate" },
+
+    { "x": 5620, "y": 750, "scale": 0.5, "image": "r" },
+    { "x": 5460, "y": 680, "scale": 0.5, "image": "r" },
+    { "x": 5460, "y": 580, "scale": 0.5, "image": "r" },
+    { "x": 5480, "y": 480, "scale": 0.5, "image": "r" },
+
+    { "x": 5590, "y": 565, "scale": 0.1, "image": "black5" },
+    { "x": 5610, "y": 550, "scale": 0.5, "image": "r" },
+    { "x": 5630, "y": 550, "scale": 0.5, "image": "r" },
+    { "x": 5650, "y": 550, "scale": 0.5, "image": "r" },
+    { "x": 5690, "y": 565, "scale": 0.1, "image": "black5" },
+    { "x": 5690, "y": 565, "scale": 1, "image": "black5" },
+    { "x": 5690, "y": 900, "scale": 1, "image": "black5" },
+
+
+
+
+    { "x": 2000, "y": 900, "scale": 1, "image": "black5" },
+    { "x": 2000, "y": 740, "scale": 1, "image": "black5" },
+
+
+
+    { "x": 6560, "y": 870, "scale": 0.1, "image": "snow" },
+    { "x": 6250, "y": 560, "scale": 0.1, "image": "snow" },
+    { "x": 6350, "y": 740, "scale": 0.1, "image": "snow" },
+
+    { "x": 6700, "y": 760, "scale": 0.1, "image": "snow" },
+    { "x": 6820, "y": 640, "scale": 0.1, "image": "snow" },
+
+    { "x": 6945, "y": 560, "scale": 0.5, "image": "r" }
+],
+
+  "_comment": "敵情報「X・Y(横・縦)、大きさ、スピード、敵画像」",
+  "enemies": [
+    { "x": 1150, "y": 500, "scale": 1.0, "speedX": -300, "image": "t1", "type": "normal", "fallable": false },
+    { "x": 1158, "y": 500, "scale": 1.0, "speedX": -130, "image": "t1", "type": "normal", "fallable": false },
+    { "x": 2030, "y": 230, "scale": 1, "speedX": -100, "image": "t1", "type": "jump","jumpHeight": -150, "jumpInterval": 200, "fallable": true },
+    
+
+    { "x": 2630, "y": 550, "scale": 1.6, "speedX": 0,"image": "t1", "type": "jump", "jumpHeight": -300, "jumpInterval": 40, "fallable": false},
+    { "x": 3600, "y": 480, "scale": 1.3, "speedX": 0, "image": "t1", "type": "normal", "fallable": true },
+
+    { "x": 5573, "y": 580, "scale": 1.6, "speedX": 120, "image": "t1", "type": "normal", "fallable": true },
+    { "x": 5688, "y": 480, "scale": 1.6, "speedX": 0, "image": "t1", "type": "jump", "jumpHeight": -300, "jumpInterval": 1000, "fallable": false },
+    { "x": 5573, "y": 480, "scale": 1.6, "speedX": 0, "image": "t1", "type": "jump", "jumpHeight": -300, "jumpInterval": 1000,"type": "shoot", "shootInterval": 2100, "bulletSpeed": 100, "bulletImage": "bullet", "fallable": false },
+    
+    { "x": 620, "y": 750, "scale": 1.5, "speedX": 200, "image": "t1", "type": "jump", "jumpHeight": -100, "jumpInterval": 100, "fallable": false },
+    { "x": 2000, "y": 750, "scale": 1, "speedX": 0, "image": "t1", "type": "shoot", "shootInterval": 2100, "bulletSpeed": 100, "bulletImage": "bullet", "fallable": false },
+    { "x": 2000, "y": 630, "scale": 1, "speedX": 0, "image": "t1", "type": "shoot", "shootInterval": 2500, "bulletSpeed": 200, "bulletImage": "bullet", "fallable": false }
+  ],
+
+  "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
+  "ground": [
+ 
+    { "x": 90, "y": 950, "width": 17, "height": 100, "image": "block2" },
+  
+    { "x": 345, "y": 950, "width": 10, "height": 60, "image": "block2" },
+    { "x": 545, "y": 950, "width": 10, "height": 150, "image": "block2" },
+    { "x": 750, "y": 950, "width": 10, "height": 240, "image": "block2" },
+
+    { "x": 1050, "y": 550, "width": 400, "height": 9, "image": "black5" },
+
+    { "x": 1700, "y": 980, "width": 200, "height": 60, "image": "block2" },
+
+    
+    { "x": 1850, "y": 300, "scale": 9.0,"width": 400, "height": 9, "image": "black1" },
+
+    { "x": 5350, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5370, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5390, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5410, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5430, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5450, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5470, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5490, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5510, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5530, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5550, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5570, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5590, "y": 930, "width": 40, "height": 200, "image": "tree" },
+    { "x": 5610, "y": 930, "width": 40, "height": 200, "image": "tree" },
+
+
+    { "x": 5750, "y": 600, "scale": 9.0,"width": 400, "height": 9, "image": "b3" }
+
+  ],
+
+  "_comment": "死亡判定情報「X・Y(横・縦)、判定の幅(横)」",
+  "holes": [
+    { "x": 1000, "y": 1000, "width": 10000, "height": 50 }
+  ],
+
+  "_comment": "ゴール情報「X・Y(横・縦)、サイズ(横・縦)、ゴール画像」",
+  "goal": {
+    "pole": { "x": 6950, "y": 500, "width": 20, "height": 100, "image": "pole" },
+    "flag": { "x": 6950, "y": 460, "width": 20, "height": 12, "image": "flag" }
+  },
+
+  "_comment": "オブジェクト情報「X・Y(横・縦)、画像サイズ(横・縦)、画像」",
+  "decorations": [
+    { "x": 0, "y": 0, "width": 35, "height": 35, "image": "kareki" },
+
+    { "x": 6950, "y": 700, "width": 20, "height": 100, "image": "pole" },
+    { "x": 6950, "y": 660, "width": 20, "height": 12, "image": "flag" }
+  ]
+}
 
