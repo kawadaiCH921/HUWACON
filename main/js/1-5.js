@@ -256,65 +256,65 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
   }
   
   // 穴に落ちたときの処理
+  // 穴に落ちたときの処理
   onFallInHole() {
-    if (this.isGameOver) return; // すでにゲームオーバーなら処理をスキップ
-    this.isGameOver = true; // ゲームオーバーフラグを設定
-    this.input.keyboard.enabled = false; // キーボード入力を無効化
+    if (this.isGameOver || this.isGameClear) return; // すでに終了している場合はスキップ
+    this.isGameOver = true;
 
-    this.player.setTint(0xff0000);  // プレイヤーを赤くするエフェクト
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.input.keyboard.enabled = false;
+    this.player.setTint(0xff0000);
+    this.player.setVelocity(0);
 
-    const hitSound = this.sound.add('hit', {volume: 1});
+    const hitSound = this.sound.add('hit', { volume: 1 });
     const gameOverSound = this.sound.add('gameOver', { loop: true, volume: 0.1 });
 
-    // ヒット音が終わった後にゲームオーバー音を再生
     hitSound.once('complete', () => {
-      this.bgm.stop();  // BGMを停止
-      gameOverSound.play();
-      this.scene.start('OverScene');  // ゲームオーバー画面に移行 
+        this.bgm.stop();
+        gameOverSound.play();
+        this.scene.start('OverScene');
     });
 
-    hitSound.play();  // ヒット音の再生開始
+    hitSound.play();
   }
 
   // プレイヤーが敵にヒットしたときの処理
   onPlayerHit() {
-    if (this.isGameOver) return; // すでにゲームオーバーなら処理をスキップ
-    this.isGameOver = true; // ゲームオーバーフラグを設定
-    this.input.keyboard.enabled = false; // キーボード入力を無効化
+    if (this.isGameOver || this.isGameClear) return; // すでに終了している場合はスキップ
+    this.isGameOver = true;
 
-    this.player.setTint(0xff0000);  // プレイヤーを赤くするエフェクト
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.input.keyboard.enabled = false;
+    this.player.setTint(0xff0000);
+    this.player.setVelocity(0);
 
-    const hitSound = this.sound.add('hit', {volume: 1.5});
+    const hitSound = this.sound.add('hit', { volume: 1.5 });
     const gameOverSound = this.sound.add('gameOver', { loop: true, volume: 0.1 });
 
-    // ヒット音が終わった後にゲームオーバー音を再生
     hitSound.once('complete', () => {
-      this.bgm.stop();  // BGMを停止
-      gameOverSound.play();
-      this.scene.start('OverScene');  // ゲームオーバー画面に移行 
+        this.bgm.stop();
+        gameOverSound.play();
+        this.scene.start('OverScene');
     });
 
-    hitSound.play();  // ヒット音の再生開始
+    hitSound.play();
   }
 
   //プレイヤーがゴールした時の処理
   onGoalReached() {
-    if (this.isGameClear) return; // すでにゲームクリアなら処理をスキップ
+    if (this.isGameClear || this.isGameOver) return; // 重複防止
     this.isGameClear = true; // ゲームクリアフラグを設定
 
     this.input.keyboard.enabled = false; // キーボード入力を無効化
-    this.player.setVelocity(0);     // プレイヤーを停止
+    this.player.setVelocity(0); // プレイヤーを停止
 
     const gameClearSound = this.sound.add('gameClear', { loop: false, volume: 0.1 });
-  
-    // ゲームクリア音が終わったらClearSceneに移行
+
+    // ゲームクリア音が終わったらclear.phpに遷移
     gameClearSound.once('complete', () => {
-      const finalTime = (this.time.now - this.startTime) / 1000;
-      this.scene.start('ClearScene', { time: finalTime });
+        const finalTime = (this.time.now - this.startTime) / 1000;
+        const url = `clear.php?time=${encodeURIComponent(finalTime.toFixed(3))}`;
+        window.location.href = url; // clear.phpに遷移
     });
-  
+
     gameClearSound.play();
   }
 
