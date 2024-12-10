@@ -63,7 +63,7 @@
     { "x": 1000, "y": -300, "scale": 0.8, "speedX": -140, "image": "nekoyoko", "type": "shoot", "shootInterval": 3500, "bulletSpeed": 200, "bulletImage": "boo", "fallable": true, "blockCollision": true },
     { "x": 2800, "y": 750, "scale": 0.7, "speedX": -100, "image": "aki", "type": "jump", "jumpHeight": -500, "jumpInterval": 2700, "fallable": false, "blockCollision": false  },
     { "x": 4600, "y": 300, "scale": 0.25, "speedX": -150, "image": "majick", "type": "shoot", "shootInterval": 3500, "bulletSpeed": 200, "bulletImage": "fish", "fallable": false, "blockCollision": false },
-    { "x": 6800, "y": 500, "scale": 1.5, "speedX": -430, "image": "aki", "type": "normal", "fallable": true }
+    { "x": 6800, "y": 500, "scale": 0.67, "speedX": -430, "image": "kat", "type": "normal", "fallable": true }
   ],
 
   "_comment": "地面情報「X・Y(横・縦)、地面の幅(横・縦)、地面画像」",
