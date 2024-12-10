@@ -256,6 +256,15 @@ shootBullet(enemy, bulletSpeed, bulletImage) {
 
 
   // 穴のゾーンを生成する関数
+  createHoleZone(hole) {
+    const zone = this.add.zone(hole.x, hole.y, hole.width, hole.height);  // 地面と同じ高さに配置
+    this.physics.world.enable(zone);
+    zone.body.setAllowGravity(false);  // 重力の影響を受けない
+    zone.body.moves = false;  // 動かないように設定
+    return zone;
+  }
+
+  // 穴のゾーンを生成する関数
   onFallInHole() {
     if (this.isGameOver || this.isGameClear) return; // すでに終了している場合はスキップ
     this.isGameOver = true;
